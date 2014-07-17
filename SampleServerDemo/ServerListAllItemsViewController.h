@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ServerListAllItemsViewController : UITableViewController
-
+@property (nonatomic, strong) NSArray *array;
 @end

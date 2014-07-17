@@ -11,7 +11,7 @@
 #import <Parse/Parse.h>
 
 @interface ServerListAllItemsViewController (){
-    NSArray *array;
+    NSArray *arrayOfContents;
 }
 
 @end
@@ -28,16 +28,11 @@
 
 - (void)viewDidLoad
 {
+    arrayOfContents=[NSArray arrayWithArray:_array];
     [super viewDidLoad];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    PFQuery *query=[PFQuery queryWithClassName:@"WebService"];
-    [query whereKey:@"Item" notEqualTo:@""];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        array = [NSArray arrayWithArray:objects];
-        [self.tableView reloadData];
-    }];
     [self.tableView reloadData];
 }
 
@@ -52,17 +47,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return array.count;
+    return arrayOfContents.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     ItemCell *cell = (ItemCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.item.text=[[array objectAtIndex:indexPath.row] valueForKey:@"Item"];
-    cell.code.text=[[array objectAtIndex:indexPath.row] valueForKey:@"Code"];
-    cell.colour.text=[[array objectAtIndex:indexPath.row] valueForKey:@"Colour"];
+    cell.item.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Item"];
+    cell.code.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Code"];
+    cell.colour.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Colour"];
     return cell;
 }
+
+
 
 @end

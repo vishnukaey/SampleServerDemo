@@ -29,40 +29,18 @@
 	// Do any additional setup after loading the view.
 }
 - (IBAction)editAnItem:(id)sender {
-    PFQuery *query=[PFQuery queryWithClassName:@"WebService"];
-    [query whereKey:@"Item" notEqualTo:@""];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        bool isPresent=NO;
-        for (int i=0; i < array.count; i++){
-            if([[[array objectAtIndex:i] valueForKey:@"Item"] isEqualToString:self.item.text] ||
-               [[[array objectAtIndex:i] valueForKey:@"Code"] isEqualToString:self.code.text] ||
-               [[[array objectAtIndex:i] valueForKey:@"Colour"] isEqualToString:self.colour.text]){
-                [self setObject];
-                [[array objectAtIndex:i] setObject:self.item.text forKey:@"Item"];
-                [[array objectAtIndex:i] setObject:self.code.text forKey:@"Code"];
-                [[array objectAtIndex:i] setObject:self.colour.text forKey:@"Colour"];
-                isPresent=YES;
-                [[array objectAtIndex:i] saveInBackground];
-            }
-        }
-        if(!isPresent){
-            [self addObject];
-        }
-    }];
-
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
+                                    [NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
+    [request setHTTPMethod:@"PUT"];
+    NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
+    NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+    NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if(!conn){
+        NSLog(@"No Connection");
     }
-
--(void) addObject{
-    PFObject *items=[PFObject objectWithClassName:@"WebService"];
-    items[@"Item"]=self.item.text;
-    items[@"Code"]=self.code.text;
-    items[@"Colour"]=self.colour.text;
-    [items saveInBackground];
 }
 
--(void) setObject{
-    
-}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];// this will do the trick

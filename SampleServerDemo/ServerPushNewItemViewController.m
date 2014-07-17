@@ -8,7 +8,8 @@
 
 #import "ServerPushNewItemViewController.h"
 
-@interface ServerPushNewItemViewController ()
+@interface ServerPushNewItemViewController (){
+}
 
 @end
 
@@ -24,11 +25,22 @@
     return self;
 }
 - (IBAction)submitAnItem:(id)sender {
-    PFObject *items=[PFObject objectWithClassName:@"WebService"];
-    items[@"Item"]=self.item.text;
-    items[@"Code"]=self.code.text;
-    items[@"Colour"]=self.colour.text;
-    [items saveInBackground];
+//    PFObject *items=[PFObject objectWithClassName:@"WebService"];
+//    items[@"Item"]=self.item.text;
+//    items[@"Code"]=self.code.text;
+//    items[@"Colour"]=self.colour.text;
+//    [items saveInBackground];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
+                                    [NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
+    [request setHTTPMethod:@"POST"];
+    NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
+    NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+    NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if(!conn){
+        NSLog(@"No Connection");
+    }
     [self resignFirstResponder];
 }
 - (void)viewDidLoad

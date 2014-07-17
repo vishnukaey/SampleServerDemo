@@ -23,13 +23,16 @@
     return self;
 }
 - (IBAction)delete:(id)sender {
-    PFQuery *query=[PFQuery queryWithClassName:@"WebService"];
-    [query whereKey:@"Code" equalTo:self.code.text];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        for(int i=0; i<array.count;i++)
-            {
-                [[array objectAtIndex:i] deleteInBackground];
-        }}];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
+                                    [NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
+    [request setHTTPMethod:@"DELETE"];
+    NSString *post = [NSString stringWithFormat:@"%@",self.code.text];
+    NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+    NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if(!conn){
+        NSLog(@"No Connection");
+    }
     [self resignFirstResponder];
 }
 
