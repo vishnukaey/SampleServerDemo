@@ -7,7 +7,7 @@
 //
 
 #import "GetNewViewController.h"
-#import "ServerListAllItemsViewController.h"
+#import "ListedViewController.h"
 
 @interface GetNewViewController (){
     NSMutableData *responseData;
@@ -32,14 +32,34 @@
 {
     [super viewDidLoad];
     responseData = [NSMutableData data];
+//    ServerListAllItemsViewController *list;
+//    list.delegate=self;
 	// Do any additional setup after loading the view.
 }
 
 - (IBAction)search:(id)sender {
+    [self.view endEditing:YES];
     queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
     [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.item.text,self.code.text,self.colour.text]];
     NSLog(@"%@",queryString);
     [self sendRequest];
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];// this will do the trick
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _item) {
+        [_code becomeFirstResponder];
+    }else if (textField == _code) {
+        [_colour becomeFirstResponder];
+    }else if (textField == _colour) {
+        [self search:self];
+        
+        
+    }
+    return YES;
 }
 
 -(void) sendRequest{
@@ -52,11 +72,8 @@
     }
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];// this will do the trick
-}
-
 #pragma mark - NSURL delegate
+
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"didReceiveResponse");
     [responseData setLength:0];
@@ -81,10 +98,9 @@
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    ServerListAllItemsViewController *list=[segue destinationViewController];
+     ListedViewController*list=[segue destinationViewController];
     list.array=array;
 }
-
 
 - (void)didReceiveMemoryWarning
 {

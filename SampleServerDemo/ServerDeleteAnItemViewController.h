@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
+#import <CCValidatedTextField.h>
     
 @interface ServerDeleteAnItemViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *code;
-
+@property (weak, nonatomic) IBOutlet UIImageView *codeStatus;
+@property (weak, nonatomic) IBOutlet CCValidatedTextField *code;
 @end

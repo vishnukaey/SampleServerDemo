@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <KoaPullToRefresh.h>
+//@protocol refreshTableDelegate <NSObject>
+//- (void) sendRequest;
+//@end
 @interface ServerListAllItemsViewController : UITableViewController
 @property (nonatomic, strong) NSArray *array;
+//@property (nonatomic, weak) id <refreshTableDelegate> delegate;
 @end

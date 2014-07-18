@@ -8,7 +8,6 @@
 
 #import "ServerListAllItemsViewController.h"
 #import "ItemCell.h"
-#import <Parse/Parse.h>
 
 @interface ServerListAllItemsViewController (){
     NSArray *arrayOfContents;
@@ -27,15 +26,22 @@
 }
 
 - (void)viewDidLoad
-{
+{   [super viewDidLoad];
     arrayOfContents=[NSArray arrayWithArray:_array];
-    [super viewDidLoad];
+//    [self.tableView addPullToRefreshWithActionHandler:^{
+//        [self.delegate sendRequest];
+//        [self.tableView reloadData];
+//        [self.tableView.pullToRefreshView stopAnimating];
+//    }];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
 }
 
+-(void) refreshTable{
+    [self.tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -60,6 +66,8 @@
     return cell;
 }
 
-
+-(void) viewWillDisappear:(BOOL)animated{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end
