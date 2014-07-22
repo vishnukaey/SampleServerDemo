@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CCValidatedTextField.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface ServerPutToAnItemViewController : UIViewController
-@property (weak, nonatomic) IBOutlet CCValidatedTextField  *item;
+@property (weak, nonatomic) IBOutlet UITextField  *item;
 @property (weak, nonatomic) IBOutlet UIImageView *emailStatus;
-@property (weak, nonatomic) IBOutlet CCValidatedTextField *code;
-@property (weak, nonatomic) IBOutlet CCValidatedTextField *colour;
+@property (weak, nonatomic) IBOutlet UITextField *code;
+@property (weak, nonatomic) IBOutlet UITextField *colour;
 @property (weak, nonatomic) IBOutlet UIImageView *codeStatus;
 @property (weak, nonatomic) IBOutlet UIImageView *colourStatus;
+@property (weak, nonatomic) IBOutlet UIButton *submit;
+
 @end

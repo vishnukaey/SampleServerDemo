@@ -22,14 +22,39 @@
     }
     return self;
 }
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    __weak typeof(self) weakSelf = self;
+    [self.code.rac_textSignal subscribeNext:^(NSString *x) {
+        typeof(self) strongSelf = weakSelf;
+        NSString *codePattern =@"[0-9]$" ;
+        self.deleteButton.enabled=[strongSelf validateString:x withPattern:codePattern];
+    }];
+}
+
+
 -(void) viewWillAppear:(BOOL)animated{
     [self initializeViews];
 }
+
+
+
+- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
+{
+    return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
+}
+
+
 
 -(void) initializeViews{
     self.code.text=@"";
     self.codeStatus.image=[UIImage imageNamed:@""];
 }
+
+
 - (IBAction)delete:(id)sender {
     [self.view endEditing:YES];
     if([self.code.text  isEqualToString:@""]){
@@ -49,16 +74,12 @@
     [self resignFirstResponder];
 }
 
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _code) {
+    if (self.deleteButton.enabled) {
         [self delete:self];
     }
     return YES;
-}
-
-- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
-{
-    return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
 }
 
 
@@ -66,44 +87,36 @@
     [self.view endEditing:YES];// this will do the trick
 }
 
+
+
+
 #pragma mark - NSURL delegate
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"Resposnse Received");
 }
 
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"Data Received");
 }
 
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
 }
+
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
     [Utilities showAlert:@"Woohoo ! It's Gone " withTitle:@"Success!"];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	NSString *codePattern = @"[0-9@!&]";
-    _code.validationBlock = ^(NSString *text) {
-        return [self validateString:text withPattern:codePattern];
-    };
-    _code.postValidationBlock = ^(BOOL valid){
-        if ( valid ) {
-            _codeStatus.image = [UIImage imageNamed:@"valid"];
-        } else {
-            _codeStatus.image = [UIImage imageNamed:@"invalid"];
-        }
-    };
-}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

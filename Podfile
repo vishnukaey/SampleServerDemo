@@ -1,6 +1,4 @@
 platform :ios, '6.0'
 pod 'ReactiveCocoa'
-pod 'CCValidatedTextField'
 pod 'KoaPullToRefresh'
-pod 'DQAlertView'
 workspace 'SampleServerDemo'

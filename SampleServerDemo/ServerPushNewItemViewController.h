@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import <DQAlertView.h>
 
 @interface ServerPushNewItemViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField  *item;

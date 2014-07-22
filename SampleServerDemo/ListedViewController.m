@@ -19,8 +19,7 @@
 
 @implementation ListedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -28,8 +27,9 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+
+
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     responseData = [NSMutableData data];
@@ -45,6 +45,7 @@
          [self makeARequestCall];
      }];
     
+    
     RACSignal *signal = [self rac_signalForSelector:@selector(searchBar:textDidChange:) fromProtocol:@protocol(UISearchBarDelegate)];
     
     __weak typeof(self)weakSelf = self;
@@ -58,6 +59,9 @@
     
 }
 
+
+
+
 -(void) makeARequestCall{
     queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
     [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.searchBar.text,self.searchBar.text,self.searchBar.text]];
@@ -65,10 +69,15 @@
     [self sendRequest];
 }
 
+
+
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
     NSLog(@"User canceled search");
     [searchBar resignFirstResponder];
 }
+
+
 
 
 -(void) sendRequest{
@@ -80,9 +89,14 @@
         NSLog(@"No Connection");
     }
 }
+
+
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *) searchBar {
     [self.view endEditing:YES];
 }
+
+
 
 #pragma mark - NSURL delegate
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -91,14 +105,19 @@
     NSLog(@"Resposnse Received");
 }
 
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [responseData appendData:data];
     NSLog(@"Data Received");
 }
 
+
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
 }
+
+
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
@@ -110,14 +129,15 @@
     [self.tableView reloadData];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return arrayOfContents.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
     ItemCell *cell = (ItemCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.item.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Item"];
@@ -127,10 +147,9 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
+
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

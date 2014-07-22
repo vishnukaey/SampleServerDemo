@@ -6,18 +6,6 @@
 // project.
 
 
-// CCValidatedTextField
-#define COCOAPODS_POD_AVAILABLE_CCValidatedTextField
-#define COCOAPODS_VERSION_MAJOR_CCValidatedTextField 1
-#define COCOAPODS_VERSION_MINOR_CCValidatedTextField 1
-#define COCOAPODS_VERSION_PATCH_CCValidatedTextField 1
-
-// DQAlertView
-#define COCOAPODS_POD_AVAILABLE_DQAlertView
-#define COCOAPODS_VERSION_MAJOR_DQAlertView 0
-#define COCOAPODS_VERSION_MINOR_DQAlertView 0
-#define COCOAPODS_VERSION_PATCH_DQAlertView 3
-
 // FontAwesome+iOS
 #define COCOAPODS_POD_AVAILABLE_FontAwesome_iOS
 #define COCOAPODS_VERSION_MAJOR_FontAwesome_iOS 0

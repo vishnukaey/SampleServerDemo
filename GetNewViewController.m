@@ -19,23 +19,21 @@
 
 @implementation GetNewViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+
+
+- (void)viewDidLoad{
     [super viewDidLoad];
     responseData = [NSMutableData data];
-//    ServerListAllItemsViewController *list;
-//    list.delegate=self;
-	// Do any additional setup after loading the view.
 }
+
+
 
 - (IBAction)search:(id)sender {
     [self.view endEditing:YES];
@@ -45,22 +43,23 @@
     [self sendRequest];
 }
 
+
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];// this will do the trick
+    [self.view endEditing:YES];
 }
 
+
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _item) {
-        [_code becomeFirstResponder];
-    }else if (textField == _code) {
-        [_colour becomeFirstResponder];
-    }else if (textField == _colour) {
-        [self search:self];
-        
-        
-    }
+    [textField resignFirstResponder];
     return YES;
 }
+
+
+
 
 -(void) sendRequest{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
@@ -72,6 +71,9 @@
     }
 }
 
+
+
+
 #pragma mark - NSURL delegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -80,14 +82,20 @@
     NSLog(@"Resposnse Received");
 }
 
+
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [responseData appendData:data];
     NSLog(@"Data Received");
 }
 
+
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
 }
+
+
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
@@ -97,10 +105,16 @@
     [self performSegueWithIdentifier:@"showGet" sender:self];
 }
 
+
+
+
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
      ListedViewController*list=[segue destinationViewController];
     list.array=array;
 }
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

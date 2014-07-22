@@ -4,16 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-CCValidatedTextField.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-DQAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-FontAwesome+iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,62 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2B4ED1A026604C4AA5127059</key>
+		<key>2A46514DC73140009BB58726</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>38568C0B53294B9C8453DADB</key>
+		<key>4CE931927C83408995E08E35</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>52B06786F22A4591965023C7</key>
+		<key>A05161C5D674474D9A0BD7D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>52B972F79C1E4C18A10EDD79</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6F12BD26D59A4133896341BC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8A46850E6AAF487A8ADE3C2B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>99FCFDB69FFD4C78B6E77A97</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9B5C5823064C460591906737</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A59476CA8B2844B5828D4A5A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AE3517B7C1D148E999A1C695</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CC797A356FDA4D01B312D52A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D41CC37C1E2E4AFF8A167F62</key>
+		<key>C360F56F78284A449B0BB82D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

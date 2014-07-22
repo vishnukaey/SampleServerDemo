@@ -1,6 +1,4 @@
 PODS:
-  - CCValidatedTextField (1.1.1)
-  - DQAlertView (0.0.3)
   - FontAwesome+iOS (0.1.1)
   - KoaPullToRefresh (1.0.6):
     - FontAwesome+iOS
@@ -13,14 +11,10 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
-  - CCValidatedTextField
-  - DQAlertView
   - KoaPullToRefresh
   - ReactiveCocoa
 
 SPEC CHECKSUMS:
-  CCValidatedTextField: ca95ad9fd19fe96bb1133cfb13cc04a87a68becf
-  DQAlertView: 803c34ba67e6fc2e13da4520da9192fded697b6a
   FontAwesome+iOS: 3c574273fb301c2e0a88f983551562bf8768b623
   KoaPullToRefresh: 7a9d6530482fb9d52e66de8560dcd8fe9c395751
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
