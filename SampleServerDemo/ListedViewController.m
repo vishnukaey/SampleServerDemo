@@ -36,12 +36,21 @@
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self makeARequestCall];
         [self.tableView.pullToRefreshView stopAnimating];
-    }];
+    } withBackgroundColor:[UIColor lightGrayColor]];
+    [RACObserve(self, searchBar)
+     subscribeNext:^(NSString *newName) {
+         [self makeARequestCall];
+     }];
 }
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [self makeARequestCall];
+-(void) toObserve{
+    [RACObserve(self.searchBar, text)
+     subscribeNext:^(NSString *newName) {
+         [self makeARequestCall];
+     }];
 }
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    [self makeARequestCall];
+//}
 
 -(void) makeARequestCall{
     queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];

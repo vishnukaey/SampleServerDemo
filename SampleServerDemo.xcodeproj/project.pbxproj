@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		221D71E319778EEB006EE17E /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 221D71E219778EEB006EE17E /* AppIcon.png */; };
 		2229CB0D196D43E10059C735 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2229CB0C196D43E10059C735 /* Foundation.framework */; };
 		2229CB11196D43E10059C735 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2229CB10196D43E10059C735 /* UIKit.framework */; };
 		2229CB17196D43E10059C735 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2229CB15196D43E10059C735 /* InfoPlist.strings */; };
@@ -48,7 +47,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		221D71E219778EEB006EE17E /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		2229CB09196D43E10059C735 /* SampleServerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleServerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2229CB0C196D43E10059C735 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2229CB0E196D43E10059C735 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -188,7 +186,6 @@
 			children = (
 				4034D0AC389F43DCB3DAD7E5 /* Pods.xcconfig */,
 				2229CB34196D43E10059C735 /* SampleServerDemoTests */,
-				221D71E219778EEB006EE17E /* AppIcon.png */,
 				2229CB14196D43E10059C735 /* SampleServerDemo-Info.plist */,
 				2229CB15196D43E10059C735 /* InfoPlist.strings */,
 				2229CB18196D43E10059C735 /* main.m */,
@@ -367,7 +364,6 @@
 			files = (
 				2229CB28196D43E10059C735 /* Images.xcassets in Resources */,
 				2229CB20196D43E10059C735 /* Main_iPhone.storyboard in Resources */,
-				221D71E319778EEB006EE17E /* AppIcon.png in Resources */,
 				22B8DDD61979066500AAD046 /* invalid.png in Resources */,
 				22B8DDD71979066500AAD046 /* valid.png in Resources */,
 				2229CB17196D43E10059C735 /* InfoPlist.strings in Resources */,
@@ -570,7 +566,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleServerDemo/SampleServerDemo-Prefix.pch";
 				INFOPLIST_FILE = "SampleServerDemo/SampleServerDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -590,7 +586,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleServerDemo/SampleServerDemo-Prefix.pch";
 				INFOPLIST_FILE = "SampleServerDemo/SampleServerDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
