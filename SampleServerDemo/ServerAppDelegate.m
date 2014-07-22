@@ -7,7 +7,6 @@
 //
 
 #import "ServerAppDelegate.h"
-#import <Parse/Parse.h>
 
 @implementation ServerAppDelegate
 

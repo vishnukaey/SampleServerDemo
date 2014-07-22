@@ -8,9 +8,8 @@
 
 #import "ServerPushNewItemViewController.h"
 
-@interface ServerPushNewItemViewController (){
-}
-
+@interface ServerPushNewItemViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
 
 @implementation ServerPushNewItemViewController
@@ -27,10 +26,23 @@
 
 - (void)viewDidLoad
 {
-    [self validateFields];
+    [super viewDidLoad];
+    
+    RAC(self.submitButton, enabled) = [RACSignal
+                                combineLatest:@[ self.item.rac_textSignal, self.code.rac_textSignal, self.colour.rac_textSignal]
+                                reduce:^(NSString *itemText, NSString *codeText, NSString *colorText) {
+                                    
+                                    NSString *itemPattern = @"[A-Z0-9a-z@!&]";
+                                    NSString *codePattern = @"[0-9@!&]";
+                                    NSString *colourPattern = @"[A-Za-z@!&]";
+                                    
+                                    return @([self validateString:itemText withPattern:itemPattern] && [self validateString:codeText withPattern:codePattern] && [self validateString:colorText withPattern:colourPattern]);
+                                }];
 }
 
+
 -(void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self initializeViews];
 }
 
@@ -43,76 +55,27 @@
     self.colourStatus.image=[UIImage imageNamed:@""];
 }
 - (IBAction)submitAnItem:(id)sender {
-    [self.view endEditing:YES];
-    if([self.item.text  isEqualToString:@""] || [self.code.text  isEqualToString:@""] || [self.colour.text  isEqualToString:@""]){
-        [Utilities showAlert:@"Ahh! No Hurry. Please fill the fields" withTitle:@"Error"];
-        return;
-    }
-    if(_item.valid && _code.valid && _colour.valid ){
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
+    
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
                                         [NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
-        [request setHTTPMethod:@"POST"];
-        NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
-        NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
-        request.HTTPBody = requestBodyData;
-        NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-        if(!conn){
-            NSLog(@"No Connection");
-        }
-        [self resignFirstResponder];
-    }
-    else{
-        [Utilities showAlert:@"Ahh! Careful. Wrong Fromats" withTitle:@"Error"];
-        return;
-    }
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _item) {
-        [_code becomeFirstResponder];
-    }else if (textField == _code) {
-        [_colour becomeFirstResponder];
-    }else if (textField == _colour) {
-        [self submitAnItem:self];
-        
-        
-    }
-    return YES;
+  [request setHTTPMethod:@"POST"];
+  NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
+  NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
+  request.HTTPBody = requestBodyData;
+  NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+  if(!conn){
+      NSLog(@"No Connection");
+  }
+  [self resignFirstResponder];
 }
 
--(void) validateFields{
-    NSString *itemPattern = @"[A-Z0-9a-z@!&]";
-    _item.validationBlock = ^(NSString *text) {
-        return [self validateString:text withPattern:itemPattern];
-    };
-    _item.postValidationBlock = ^(BOOL valid){
-        if ( valid ) {
-            _emailStatus.image = [UIImage imageNamed:@"valid"];
-        } else {
-            _emailStatus.image = [UIImage imageNamed:@"invalid"];
-        }
-    };
-    NSString *codePattern = @"[0-9@!&]";
-    _code.validationBlock = ^(NSString *text) {
-        return [self validateString:text withPattern:codePattern];
-    };
-    _code.postValidationBlock = ^(BOOL valid){
-        if ( valid ) {
-            _codeStatus.image = [UIImage imageNamed:@"valid"];
-        } else {
-            _codeStatus.image = [UIImage imageNamed:@"invalid"];
-        }
-    };
-    NSString *colourPattern = @"[A-Za-z@!&]";
-    _colour.validationBlock = ^(NSString *text) {
-        return [self validateString:text withPattern:colourPattern];
-    };
-    _colour.postValidationBlock = ^(BOOL valid){
-        if ( valid ) {
-            _colourStatus.image = [UIImage imageNamed:@"valid"];
-        } else {
-            _colourStatus.image = [UIImage imageNamed:@"invalid"];
-        }
-    };
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if ([self.submitButton isEnabled]) {
+        [self submitAnItem:self.submitButton];
+    }
+    return YES;
 }
 
 - (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
