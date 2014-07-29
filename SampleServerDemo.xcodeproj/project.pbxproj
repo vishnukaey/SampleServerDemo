@@ -32,6 +32,8 @@
 		22B8DDD71979066500AAD046 /* valid.png in Resources */ = {isa = PBXBuildFile; fileRef = 22B8DDD51979066500AAD046 /* valid.png */; };
 		22B8DDDA1979385E00AAD046 /* ListedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8DDD91979385E00AAD046 /* ListedViewController.m */; };
 		22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DC5A05197657A100444D37 /* GetNewViewController.m */; };
+		22FA70F01980C9EF00E083AB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22FA70EE1980C9EF00E083AB /* Model.xcdatamodeld */; };
+		22FA70F31980CA8E00E083AB /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA70F21980CA8E00E083AB /* Entity.m */; };
 		B7ECA64D543A4545893CA1D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DE91E0045B4803B0FF67A5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,9 @@
 		22B8DDD91979385E00AAD046 /* ListedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListedViewController.m; path = SampleServerDemo/ListedViewController.m; sourceTree = "<group>"; };
 		22DC5A04197657A100444D37 /* GetNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetNewViewController.h; sourceTree = "<group>"; };
 		22DC5A05197657A100444D37 /* GetNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetNewViewController.m; sourceTree = "<group>"; };
+		22FA70EF1980C9EF00E083AB /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		22FA70F11980CA8E00E083AB /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		22FA70F21980CA8E00E083AB /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
 		4034D0AC389F43DCB3DAD7E5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F8DE91E0045B4803B0FF67A5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -181,6 +186,7 @@
 		2229CB13196D43E10059C735 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				22FA70ED1980C9E100E083AB /* CoreData */,
 				4034D0AC389F43DCB3DAD7E5 /* Pods.xcconfig */,
 				2229CB34196D43E10059C735 /* SampleServerDemoTests */,
 				2229CB14196D43E10059C735 /* SampleServerDemo-Info.plist */,
@@ -268,6 +274,16 @@
 				2229CB51196D4A2A0059C735 /* ServerDeleteAnItemViewController.m */,
 			);
 			name = "DELETE ViewControllers";
+			sourceTree = "<group>";
+		};
+		22FA70ED1980C9E100E083AB /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				22FA70EE1980C9EF00E083AB /* Model.xcdatamodeld */,
+				22FA70F11980CA8E00E083AB /* Entity.h */,
+				22FA70F21980CA8E00E083AB /* Entity.m */,
+			);
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 		D4FD3BE5FEB94DD8851A5854 /* Frameworks */ = {
@@ -423,8 +439,10 @@
 				2229CB56196D4AF00059C735 /* ItemCell.m in Sources */,
 				2229CB19196D43E10059C735 /* main.m in Sources */,
 				2229CB52196D4A2A0059C735 /* ServerDeleteAnItemViewController.m in Sources */,
+				22FA70F01980C9EF00E083AB /* Model.xcdatamodeld in Sources */,
 				2229CB1D196D43E10059C735 /* ServerAppDelegate.m in Sources */,
 				22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */,
+				22FA70F31980CA8E00E083AB /* Entity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,7 +576,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/QBAdmin/Documents/SampleServerDemo,
+					/Users/QBAdmin/Documents/MyProjects/webservice,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleServerDemo/SampleServerDemo-Prefix.pch";
@@ -581,7 +599,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/QBAdmin/Documents/SampleServerDemo,
+					/Users/QBAdmin/Documents/MyProjects/webservice,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleServerDemo/SampleServerDemo-Prefix.pch";
@@ -665,6 +683,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		22FA70EE1980C9EF00E083AB /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				22FA70EF1980C9EF00E083AB /* Model.xcdatamodel */,
+			);
+			currentVersion = 22FA70EF1980C9EF00E083AB /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2229CB01196D43E10059C735 /* Project object */;
 }

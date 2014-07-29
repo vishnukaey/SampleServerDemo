@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <KoaPullToRefresh.h>
 #import <ReactiveCocoa.h>
+#import <CoreData/CoreData.h>
 
 @interface ListedViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

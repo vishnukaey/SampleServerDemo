@@ -8,10 +8,14 @@
 
 #import "GetNewViewController.h"
 #import "ListedViewController.h"
+#import "ServerAppDelegate.h"
+#import "Entity.h"
+
 
 @interface GetNewViewController (){
     NSMutableData *responseData;
-    NSArray *array;
+    NSMutableArray *array;
+    NSArray *loadedArray;
     NSMutableString *queryString;
 }
 
@@ -36,6 +40,7 @@
 
 
 - (IBAction)search:(id)sender {
+    array=[[NSMutableArray alloc]init];
     [self.view endEditing:YES];
     queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
     [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.item.text,self.code.text,self.colour.text]];
@@ -45,11 +50,9 @@
 
 
 
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
-
 
 
 
@@ -57,7 +60,6 @@
     [textField resignFirstResponder];
     return YES;
 }
-
 
 
 
@@ -93,6 +95,10 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
+    NSLog(@"Loading the cached Data from device... ");
+    [self loadFromDevice];
+    [self getValuesFromLoadedArray];
+    [self performSegueWithIdentifier:@"showGet" sender:self];
 }
 
 
@@ -102,18 +108,78 @@
     NSLog(@"Succeeded! Received %d bytes of data",[responseData length]);
     array = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:Nil];
     NSLog(@"%@",array);
+    [self loadFromDevice];
+    [self saveToDevice];
     [self performSegueWithIdentifier:@"showGet" sender:self];
 }
 
+#pragma mark - Core Data methods
 
+-(void) saveToDevice{
+    ServerAppDelegate *appDelegate =
+    [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context =
+    [appDelegate managedObjectContext];
+    NSError *error;
+    for(int i=0;i<array.count;i++){
+        if([self isANewData:[array objectAtIndex:i]])
+        {
+        NSManagedObject *newContact;
+        newContact = [NSEntityDescription
+                      insertNewObjectForEntityForName:@"Entity"
+                      inManagedObjectContext:context];
+        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
+        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
+        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
+    }
+    else
+        continue;
+    }
+    [context save:&error];
+}
 
+-(bool) isANewData:(NSDictionary*)item{
+    bool flag=YES;
+    for (Entity *entity in loadedArray) {
+        if([[item valueForKey:@"Item"] isEqualToString:entity.item] && [[item valueForKey:@"Code"] isEqualToString:entity.code] && [[item valueForKey:@"Colour"] isEqualToString:entity.colour] )
+        {
+            flag=NO;
+            break;
+        }
+    }
+    return flag;
+}
 
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-     ListedViewController*list=[segue destinationViewController];
-    list.array=array;
+-(void) getValuesFromLoadedArray{
+    for (Entity *entity in loadedArray) {
+        NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
+        [dict setObject:entity.item forKey:@"Item"];
+        [dict setObject:entity.code forKey:@"Code"];
+        [dict setObject:entity.colour forKey:@"Colour"];
+        [array addObject:dict];
+    }
 }
 
 
+
+-(void) loadFromDevice{
+    ServerAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *moc = [appDelegate managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"Entity" inManagedObjectContext:moc];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    NSError *error;
+    loadedArray=[moc executeFetchRequest:request error:&error];
+}
+
+#pragma mark - Segue and Memory Management
+
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    ListedViewController*list=[segue destinationViewController];
+    list.array=array;
+}
 
 
 - (void)didReceiveMemoryWarning
