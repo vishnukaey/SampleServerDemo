@@ -17,6 +17,5 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (NSURL *)applicationDocumentsDirectory;
--(NSArray*)getAllPhoneBookRecords;
 
 @end

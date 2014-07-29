@@ -60,23 +60,13 @@
 }
 
 
-
+#pragma mark - Methods to handle request
 
 -(void) makeARequestCall{
     queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
     [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.searchBar.text,self.searchBar.text,self.searchBar.text]];
-    NSLog(@"%@",queryString);
     [self sendRequest];
 }
-
-
-
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
-    NSLog(@"User canceled search");
-    [searchBar resignFirstResponder];
-}
-
 
 
 
@@ -89,6 +79,16 @@
         NSLog(@"No Connection");
     }
 }
+
+
+
+#pragma mark - SearchBar delegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
+    NSLog(@"User canceled search");
+    [searchBar resignFirstResponder];
+}
+
 
 
 
@@ -122,15 +122,17 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
     NSLog(@"Succeeded! Received %d bytes of data",[responseData length]);
+    
     if(responseData){
     arrayOfContents = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:Nil];
     }
+    
     NSLog(@"%@",arrayOfContents);
     [self.tableView reloadData];
 }
 
 
-
+#pragma mark - Table View delegates
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return arrayOfContents.count;
 }
@@ -138,11 +140,13 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     static NSString *CellIdentifier = @"Cell";
     ItemCell *cell = (ItemCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.item.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Item"];
     cell.code.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Code"];
     cell.colour.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Colour"];
+    
     return cell;
 }
 

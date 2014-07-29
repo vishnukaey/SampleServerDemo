@@ -18,10 +18,12 @@
     NSArray *loadedArray;
     NSMutableString *queryString;
 }
-
 @end
 
+
 @implementation GetNewViewController
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +31,7 @@
     }
     return self;
 }
+
 
 
 
@@ -50,9 +53,11 @@
 
 
 
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
+
 
 
 
@@ -60,6 +65,7 @@
     [textField resignFirstResponder];
     return YES;
 }
+
 
 
 
@@ -86,10 +92,12 @@
 
 
 
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [responseData appendData:data];
     NSLog(@"Data Received");
 }
+
 
 
 
@@ -103,6 +111,7 @@
 
 
 
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
     NSLog(@"Succeeded! Received %d bytes of data",[responseData length]);
@@ -112,6 +121,9 @@
     [self saveToDevice];
     [self performSegueWithIdentifier:@"showGet" sender:self];
 }
+
+
+
 
 #pragma mark - Core Data methods
 
@@ -124,19 +136,21 @@
     for(int i=0;i<array.count;i++){
         if([self isANewData:[array objectAtIndex:i]])
         {
-        NSManagedObject *newContact;
-        newContact = [NSEntityDescription
-                      insertNewObjectForEntityForName:@"Entity"
-                      inManagedObjectContext:context];
-        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
-        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
-        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
+            NSManagedObject *newContact;
+            newContact = [NSEntityDescription
+                          insertNewObjectForEntityForName:@"Entity"
+                          inManagedObjectContext:context];
+            [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
+            [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
+            [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
     }
     else
         continue;
-    }
-    [context save:&error];
+    }[context save:&error];
 }
+
+
+
 
 -(bool) isANewData:(NSDictionary*)item{
     bool flag=YES;
@@ -150,6 +164,9 @@
     return flag;
 }
 
+
+
+
 -(void) getValuesFromLoadedArray{
     for (Entity *entity in loadedArray) {
         NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
@@ -159,6 +176,8 @@
         [array addObject:dict];
     }
 }
+
+
 
 
 
@@ -173,8 +192,10 @@
     loadedArray=[moc executeFetchRequest:request error:&error];
 }
 
-#pragma mark - Segue and Memory Management
 
+
+
+#pragma mark - Segue and Memory Management
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     ListedViewController*list=[segue destinationViewController];
