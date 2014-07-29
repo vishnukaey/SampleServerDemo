@@ -12,8 +12,8 @@
 
 @interface Entity : NSManagedObject
 
-@property (nonatomic, retain) NSString * item;
-@property (nonatomic, retain) NSString * code;
-@property (nonatomic, retain) NSString * colour;
-
+@property (nonatomic, strong) NSString * item;
+@property (nonatomic, strong) NSString * code;
+@property (nonatomic, strong) NSString * colour;
+@property (nonatomic, assign) BOOL flag;
 @end

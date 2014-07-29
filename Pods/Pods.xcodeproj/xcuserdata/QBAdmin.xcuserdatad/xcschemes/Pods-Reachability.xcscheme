@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDD9558C9868405481F0047D"
-               BuildableName = "libPods-KoaPullToRefresh.a"
-               BlueprintName = "Pods-KoaPullToRefresh"
+               BlueprintIdentifier = "BCC2A260C51A4F729AB8F204"
+               BuildableName = "libPods-Reachability.a"
+               BlueprintName = "Pods-Reachability"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

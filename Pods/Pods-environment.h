@@ -18,6 +18,12 @@
 #define COCOAPODS_VERSION_MINOR_KoaPullToRefresh 0
 #define COCOAPODS_VERSION_PATCH_KoaPullToRefresh 6
 
+// Reachability
+#define COCOAPODS_POD_AVAILABLE_Reachability
+#define COCOAPODS_VERSION_MAJOR_Reachability 3
+#define COCOAPODS_VERSION_MINOR_Reachability 1
+#define COCOAPODS_VERSION_PATCH_Reachability 1
+
 // ReactiveCocoa
 #define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
 #define COCOAPODS_VERSION_MAJOR_ReactiveCocoa 2

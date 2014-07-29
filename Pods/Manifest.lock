@@ -2,6 +2,7 @@ PODS:
   - FontAwesome+iOS (0.1.1)
   - KoaPullToRefresh (1.0.6):
     - FontAwesome+iOS
+  - Reachability (3.1.1)
   - ReactiveCocoa (2.3.1):
     - ReactiveCocoa/UI
   - ReactiveCocoa/Core (2.3.1):
@@ -12,11 +13,13 @@ PODS:
 
 DEPENDENCIES:
   - KoaPullToRefresh
+  - Reachability
   - ReactiveCocoa
 
 SPEC CHECKSUMS:
   FontAwesome+iOS: 3c574273fb301c2e0a88f983551562bf8768b623
   KoaPullToRefresh: 7a9d6530482fb9d52e66de8560dcd8fe9c395751
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
 
 COCOAPODS: 0.33.1

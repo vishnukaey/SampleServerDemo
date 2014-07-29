@@ -103,11 +103,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2290CB30196FE58B00AF3941 /* SystemConfiguration.framework in Frameworks */,
 				2229CB11196D43E10059C735 /* UIKit.framework in Frameworks */,
 				2229CB0D196D43E10059C735 /* Foundation.framework in Frameworks */,
 				22B8DDC81978EA6D00AAD046 /* CoreGraphics.framework in Frameworks */,
 				22B8DDC51978EA5100AAD046 /* QuartzCore.framework in Frameworks */,
-				2290CB30196FE58B00AF3941 /* SystemConfiguration.framework in Frameworks */,
 				2290CB20196FE53900AF3941 /* AudioToolbox.framework in Frameworks */,
 				B7ECA64D543A4545893CA1D8 /* libPods.a in Frameworks */,
 			);

@@ -1,4 +1,5 @@
 platform :ios, '6.0'
 pod 'ReactiveCocoa'
 pod 'KoaPullToRefresh'
+pod 'Reachability'
 workspace 'SampleServerDemo'

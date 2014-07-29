@@ -13,6 +13,7 @@
 
 @dynamic item;
 @dynamic code;
+@dynamic flag;
 @dynamic colour;
 
 @end

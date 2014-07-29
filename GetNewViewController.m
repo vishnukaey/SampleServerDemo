@@ -134,38 +134,40 @@
     [appDelegate managedObjectContext];
     NSError *error;
     for(int i=0;i<array.count;i++){
-        if([self isANewData:[array objectAtIndex:i]])
-        {
-            NSManagedObject *newContact;
-            newContact = [NSEntityDescription
-                          insertNewObjectForEntityForName:@"Entity"
-                          inManagedObjectContext:context];
-            [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
-            [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
-            [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
-    }
-    else
-        continue;
+        [self deleteAllData];
+        NSManagedObject *newContact;
+        newContact = [NSEntityDescription
+                        insertNewObjectForEntityForName:@"Entity"
+                        inManagedObjectContext:context];
+        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
+        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
+        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
     }[context save:&error];
 }
 
 
 
+//-(bool) isANewData:(NSDictionary*)item{
+//    bool flag=YES;
+//    for (Entity *entity in loadedArray) {
+//        if([[item valueForKey:@"Item"] isEqualToString:entity.item] && [[item valueForKey:@"Code"] isEqualToString:entity.code] && [[item valueForKey:@"Colour"] isEqualToString:entity.colour] )
+//        {
+//            flag=NO;
+//            break;
+//        }
+//    }
+//    return flag;
+//}
 
--(bool) isANewData:(NSDictionary*)item{
-    bool flag=YES;
-    for (Entity *entity in loadedArray) {
-        if([[item valueForKey:@"Item"] isEqualToString:entity.item] && [[item valueForKey:@"Code"] isEqualToString:entity.code] && [[item valueForKey:@"Colour"] isEqualToString:entity.colour] )
-        {
-            flag=NO;
-            break;
-        }
+-(void)deleteAllData{
+    ServerAppDelegate *appDelegate =
+    [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context =
+    [appDelegate managedObjectContext];
+    for(NSManagedObject *object in loadedArray){
+    [context deleteObject:object];
     }
-    return flag;
 }
-
-
-
 
 -(void) getValuesFromLoadedArray{
     for (Entity *entity in loadedArray) {
@@ -176,7 +178,6 @@
         [array addObject:dict];
     }
 }
-
 
 
 

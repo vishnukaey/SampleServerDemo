@@ -55,7 +55,6 @@
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
         [_managedObjectContext setPersistentStoreCoordinator: coordinator];
     }
-    
     return _managedObjectContext;
 }
 
@@ -86,24 +85,6 @@
     }
     
     return _persistentStoreCoordinator;
-}
-
--(NSArray*)getAllPhoneBookRecords
-{
-    // initializing NSFetchRequest
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    //Setting Entity to be Queried
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entity"
-                                              inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError* error;
-    
-    // Query on managedObjectContext With Generated fetchRequest
-    NSArray *fetchedRecords = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    // Returning Fetched Records
-    return fetchedRecords;
 }
 
 #pragma mark - Application's Documents directory

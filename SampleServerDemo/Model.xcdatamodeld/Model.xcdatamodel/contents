@@ -3,9 +3,10 @@
     <entity name="Entity" representedClassName="Entity" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="colour" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flag" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Entity" positionX="160" positionY="192" width="128" height="88"/>
+        <element name="Entity" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

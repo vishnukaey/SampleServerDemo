@@ -7,8 +7,12 @@
 //
 
 #import "ServerPushNewItemViewController.h"
+#import "Entity.h"
 
-@interface ServerPushNewItemViewController ()
+
+@interface ServerPushNewItemViewController (){
+    NSArray *loadedArray;
+}
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
 
@@ -37,6 +41,27 @@
                                     
                                     return @([self validateString:itemText withPattern:itemPattern] && [self validateString:codeText withPattern:codePattern] && [self validateString:colorText withPattern:colourPattern]);
                                 }];
+    
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    reach.reachableBlock = ^(Reachability*reach)
+    {
+        [self loadFromDevice];
+        for (Entity *entity in loadedArray) {
+            if(entity.flag==1){
+                entity.flag=0;
+                [self saveEntityInBackground:entity];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"REACHABLE!");
+            NSLog(@"Saved to MySQL");
+        });
+    };
+    reach.unreachableBlock = ^(Reachability*reach)
+    {
+        NSLog(@"UNREACHABLE!");
+    };
+    [reach startNotifier];
 }
 
 
@@ -45,6 +70,7 @@
     [super viewWillDisappear:animated];
     [self initializeViews];
 }
+
 
 
 
@@ -58,6 +84,26 @@
 }
 
 
+#pragma mark - Methods to Post
+
+- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
+{
+    return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
+}
+
+
+-(void) saveEntityInBackground:(Entity *) entity{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
+                                    [NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
+    [request setHTTPMethod:@"POST"];
+    NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",entity.item,entity.code,entity.colour];
+    NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+    NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    if(!conn){
+        NSLog(@"No Connection");
+    }
+}
 
 - (IBAction)submitAnItem:(id)sender {
     
@@ -74,7 +120,28 @@
   [self resignFirstResponder];
 }
 
+-(void) postToPhone{
+    ServerAppDelegate *appDelegate =
+    [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context =
+    [appDelegate managedObjectContext];
+    NSError *error;
+    NSManagedObject *newContact;
+    newContact = [NSEntityDescription
+                      insertNewObjectForEntityForName:@"Entity"
+                      inManagedObjectContext:context];
+    [newContact setValue:self.item.text forKey:@"item"];
+    [newContact setValue:self.code.text forKey:@"code"];
+    [newContact setValue:self.colour.text forKey:@"colour"];
+    [newContact setValue:@1 forKey:@"flag"];
+    [context save:&error];
+    [Utilities showAlert:@"Added offline" withTitle:@"Success!"];
+}
 
+
+
+
+#pragma mark - TextField delegates
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -87,9 +154,8 @@
 
 
 
-- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
-{
-    return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 
 
@@ -107,6 +173,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
+    [self postToPhone];
 }
 
 
@@ -115,9 +182,15 @@
     [Utilities showAlert:@"Woohoo ! It's added " withTitle:@"Success!"];
 }
 
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];
+-(void) loadFromDevice{
+    ServerAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *moc = [appDelegate managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"Entity" inManagedObjectContext:moc];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    NSError *error;
+    loadedArray=[moc executeFetchRequest:request error:&error];
 }
 
 
