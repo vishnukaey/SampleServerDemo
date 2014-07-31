@@ -16,4 +16,5 @@
     #import <Utilities.h>
     #import <ServerAppDelegate.h>
     #import <Reachability/Reachability.h>
+    #import <Entity.h>
 #endif

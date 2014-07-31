@@ -11,11 +11,8 @@
 
 @interface ServerPutToAnItemViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField  *item;
-@property (weak, nonatomic) IBOutlet UIImageView *emailStatus;
 @property (weak, nonatomic) IBOutlet UITextField *code;
 @property (weak, nonatomic) IBOutlet UITextField *colour;
-@property (weak, nonatomic) IBOutlet UIImageView *codeStatus;
-@property (weak, nonatomic) IBOutlet UIImageView *colourStatus;
 @property (weak, nonatomic) IBOutlet UIButton *submit;
 
 @end

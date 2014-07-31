@@ -17,12 +17,13 @@
     NSMutableArray *array;
     NSArray *loadedArray;
     NSMutableString *queryString;
+    Reachability *reach;
+    bool isReachable;
 }
 @end
 
 
 @implementation GetNewViewController
-
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -34,21 +35,57 @@
 
 
 
-
 - (void)viewDidLoad{
     [super viewDidLoad];
     responseData = [NSMutableData data];
+    NSLog(@"Get");
+//    [self connectivityCheck];
+}
+
+//-(void) connectivityCheck{
+//    reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+//    __weak typeof(self)weakSelf = self;
+//    reach.reachableBlock = ^(Reachability*reach)
+//    {
+//        __strong typeof (self)strongSelf=weakSelf;
+//        strongSelf->isReachable=YES;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSLog(@"REACHABLE!");
+//        });
+//    };
+//    reach.unreachableBlock = ^(Reachability*reach)
+//    {
+//        __strong typeof (self)strongSelf=weakSelf;
+//        strongSelf->isReachable=NO;
+//        NSLog(@"UNREACHABLE!");
+//    };
+//    [reach startNotifier];
+//}
+
+-(void) viewWillAppear:(BOOL)animated{
+    self.search.enabled=YES;
 }
 
 
-
 - (IBAction)search:(id)sender {
-    array=[[NSMutableArray alloc]init];
-    [self.view endEditing:YES];
-    queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
-    [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.item.text,self.code.text,self.colour.text]];
-    NSLog(@"%@",queryString);
-    [self sendRequest];
+    
+    if(isReachable){
+        self.search.enabled=NO;
+        array=[[NSMutableArray alloc]init];
+        [self.view endEditing:YES];
+        queryString=[[NSMutableString alloc] initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
+        [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.item.text,self.code.text,self.colour.text]];
+        NSLog(@"%@",queryString);
+        [self sendRequest];
+    }
+    
+    else{
+        NSLog(@"Loading the cached Data from device... ");
+        [self loadFromDevice];
+        [self getValuesFromLoadedArray];
+        [self performSegueWithIdentifier:@"showGet" sender:self];
+    }
+    
 }
 
 
@@ -81,7 +118,6 @@
 
 
 
-
 #pragma mark - NSURL delegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -90,38 +126,26 @@
     NSLog(@"Resposnse Received");
 }
 
-
-
-
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [responseData appendData:data];
     NSLog(@"Data Received");
 }
 
-
-
-
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
-    NSLog(@"Loading the cached Data from device... ");
-    [self loadFromDevice];
-    [self getValuesFromLoadedArray];
-    [self performSegueWithIdentifier:@"showGet" sender:self];
 }
-
-
-
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
     NSLog(@"Succeeded! Received %d bytes of data",[responseData length]);
     array = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:Nil];
     NSLog(@"%@",array);
-    [self loadFromDevice];
-    [self saveToDevice];
+    if([self.item.text isEqualToString:@""] && [self.code.text isEqualToString:@""] && [self.colour.text isEqualToString:@""]){
+        [self loadFromDevice];
+        [self saveToDevice];
+    }
     [self performSegueWithIdentifier:@"showGet" sender:self];
 }
-
 
 
 
@@ -133,31 +157,19 @@
     NSManagedObjectContext *context =
     [appDelegate managedObjectContext];
     NSError *error;
+    [self deleteAllData];
     for(int i=0;i<array.count;i++){
-        [self deleteAllData];
         NSManagedObject *newContact;
-        newContact = [NSEntityDescription
-                        insertNewObjectForEntityForName:@"Entity"
+        newContact = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
                         inManagedObjectContext:context];
         [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
         [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
         [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
-    }[context save:&error];
+    }
+    [context save:&error];
 }
 
 
-
-//-(bool) isANewData:(NSDictionary*)item{
-//    bool flag=YES;
-//    for (Entity *entity in loadedArray) {
-//        if([[item valueForKey:@"Item"] isEqualToString:entity.item] && [[item valueForKey:@"Code"] isEqualToString:entity.code] && [[item valueForKey:@"Colour"] isEqualToString:entity.colour] )
-//        {
-//            flag=NO;
-//            break;
-//        }
-//    }
-//    return flag;
-//}
 
 -(void)deleteAllData{
     ServerAppDelegate *appDelegate =
@@ -168,6 +180,8 @@
     [context deleteObject:object];
     }
 }
+
+
 
 -(void) getValuesFromLoadedArray{
     for (Entity *entity in loadedArray) {

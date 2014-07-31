@@ -12,6 +12,8 @@
 
 @interface ServerPushNewItemViewController (){
     NSArray *loadedArray;
+    NSString *DuplicateEntry;
+    Reachability* reach;
 }
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
@@ -31,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    DuplicateEntry=NULL;
+    ServerAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     RAC(self.submitButton, enabled) = [RACSignal
                                 combineLatest:@[ self.item.rac_textSignal, self.code.rac_textSignal, self.colour.rac_textSignal]
                                 reduce:^(NSString *itemText, NSString *codeText, NSString *colorText) {
@@ -42,14 +46,17 @@
                                     return @([self validateString:itemText withPattern:itemPattern] && [self validateString:codeText withPattern:codePattern] && [self validateString:colorText withPattern:colourPattern]);
                                 }];
     
-    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    __weak typeof(self)weakSelf = self;
     reach.reachableBlock = ^(Reachability*reach)
     {
-        [self loadFromDevice];
-        for (Entity *entity in loadedArray) {
+        __strong typeof (self)strongSelf=weakSelf;
+        appDelegate.isReachable=YES;
+        [strongSelf loadFromDevice];
+        for (Entity *entity in strongSelf->loadedArray) {
             if(entity.flag==1){
                 entity.flag=0;
-                [self saveEntityInBackground:entity];
+                [strongSelf saveEntityInBackground:entity];
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -59,6 +66,7 @@
     };
     reach.unreachableBlock = ^(Reachability*reach)
     {
+        appDelegate.isReachable=NO;
         NSLog(@"UNREACHABLE!");
     };
     [reach startNotifier];
@@ -78,18 +86,16 @@
     self.item.text=@"";
     self.code.text=@"";
     self.colour.text=@"";
-    self.emailStatus.image=[UIImage imageNamed:@""];
-    self.codeStatus.image=[UIImage imageNamed:@""];
-    self.colourStatus.image=[UIImage imageNamed:@""];
 }
+
 
 
 #pragma mark - Methods to Post
 
-- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
-{
+- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern{
     return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
 }
+
 
 
 -(void) saveEntityInBackground:(Entity *) entity{
@@ -105,20 +111,27 @@
     }
 }
 
+
 - (IBAction)submitAnItem:(id)sender {
-    
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
+    ServerAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    if(appDelegate.isReachable){
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
                                         [NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
-  [request setHTTPMethod:@"POST"];
-  NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
-  NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
-  request.HTTPBody = requestBodyData;
-  NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-  if(!conn){
-      NSLog(@"No Connection");
-  }
-  [self resignFirstResponder];
+        [request setHTTPMethod:@"POST"];
+        NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
+        NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        request.HTTPBody = requestBodyData;
+        NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+        if(!conn){
+            NSLog(@"No Connection");
+        }
+        [self resignFirstResponder];
+    }
+    else{
+        [self postToPhone];
+    }
 }
+
 
 -(void) postToPhone{
     ServerAppDelegate *appDelegate =
@@ -168,18 +181,24 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"Data Received");
+     DuplicateEntry= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if(DuplicateEntry){
+        [Utilities showAlert:DuplicateEntry withTitle:@"Duplicate Entry"];
+    }
 }
 
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError %@",error);
-    [self postToPhone];
 }
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"connectionDidFinishLoading");
-    [Utilities showAlert:@"Woohoo ! It's added " withTitle:@"Success!"];
+    if(!DuplicateEntry){
+    [Utilities showAlert:@"Added item" withTitle:@"Success!"];
+    }
+    DuplicateEntry=Nil;
 }
 
 -(void) loadFromDevice{

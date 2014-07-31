@@ -48,9 +48,6 @@
     self.item.text=@"";
     self.code.text=@"";
     self.colour.text=@"";
-    self.emailStatus.image=[UIImage imageNamed:@""];
-    self.codeStatus.image=[UIImage imageNamed:@""];
-    self.colourStatus.image=[UIImage imageNamed:@""];
 }
 
 - (IBAction)editAnItem:(id)sender {

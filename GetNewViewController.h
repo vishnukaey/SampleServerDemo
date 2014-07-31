@@ -11,7 +11,9 @@
 
 @interface GetNewViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *search;
 @property (weak, nonatomic) IBOutlet UITextField *item;
 @property (weak, nonatomic) IBOutlet UITextField *code;
 @property (weak, nonatomic) IBOutlet UITextField *colour;
+
 @end
