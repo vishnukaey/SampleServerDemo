@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22172E8C198A2CE1009055BB /* DataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 22172E8B198A2CE1009055BB /* DataHandler.m */; };
 		2229CB0D196D43E10059C735 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2229CB0C196D43E10059C735 /* Foundation.framework */; };
 		2229CB11196D43E10059C735 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2229CB10196D43E10059C735 /* UIKit.framework */; };
 		2229CB17196D43E10059C735 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2229CB15196D43E10059C735 /* InfoPlist.strings */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22172E8A198A2CE1009055BB /* DataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHandler.h; sourceTree = "<group>"; };
+		22172E8B198A2CE1009055BB /* DataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataHandler.m; sourceTree = "<group>"; };
 		2229CB09196D43E10059C735 /* SampleServerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleServerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2229CB0C196D43E10059C735 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2229CB0E196D43E10059C735 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -126,6 +129,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22172E89198A2CAD009055BB /* DataHandlerClasses */ = {
+			isa = PBXGroup;
+			children = (
+				22172E8A198A2CE1009055BB /* DataHandler.h */,
+				22172E8B198A2CE1009055BB /* DataHandler.m */,
+			);
+			name = DataHandlerClasses;
+			sourceTree = "<group>";
+		};
 		2229CB00196D43E10059C735 = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +185,7 @@
 				2229CB1E196D43E10059C735 /* Main_iPhone.storyboard */,
 				2229CB1B196D43E10059C735 /* ServerAppDelegate.h */,
 				2229CB1C196D43E10059C735 /* ServerAppDelegate.m */,
+				22172E89198A2CAD009055BB /* DataHandlerClasses */,
 				22DC5A001976570F00444D37 /* GET ViewControllers */,
 				22DC5A031976574F00444D37 /* DELETE ViewControllers */,
 				22DC5A021976574900444D37 /* PUT ViewControllers */,
@@ -436,6 +449,7 @@
 				2229CB49196D499D0059C735 /* ServerPushNewItemViewController.m in Sources */,
 				2229CB4F196D4A150059C735 /* ServerPutToAnItemViewController.m in Sources */,
 				22B8DDD21978FF9700AAD046 /* Utilities.m in Sources */,
+				22172E8C198A2CE1009055BB /* DataHandler.m in Sources */,
 				2229CB56196D4AF00059C735 /* ItemCell.m in Sources */,
 				2229CB19196D43E10059C735 /* main.m in Sources */,
 				2229CB52196D4A2A0059C735 /* ServerDeleteAnItemViewController.m in Sources */,

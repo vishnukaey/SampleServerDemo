@@ -17,4 +17,5 @@
     #import <ServerAppDelegate.h>
     #import <Reachability/Reachability.h>
     #import <Entity.h>
+    #import <DataHandler.h>
 #endif
