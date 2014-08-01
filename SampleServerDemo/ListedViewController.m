@@ -32,15 +32,14 @@
 
 
 - (void)viewDidLoad{
+    
     [super viewDidLoad];
     responseData = [NSMutableData data];
     arrayOfContents=[NSMutableArray arrayWithArray:_array];
     
     [self.tableView addPullToRefreshWithActionHandler:^{
-
         [self makeARequestCall];
         [self.tableView.pullToRefreshView stopAnimating];
-
     } withBackgroundColor:[UIColor lightGrayColor]];
     
     
@@ -50,44 +49,50 @@
      }];
     
     
-    RACSignal *signal = [self rac_signalForSelector:@selector(searchBar:textDidChange:) fromProtocol:@protocol(UISearchBarDelegate)];
-    
+    RACSignal *signal = [self rac_signalForSelector:
+                         @selector(searchBar:textDidChange:) fromProtocol:
+                         @protocol(UISearchBarDelegate)];
     __weak typeof(self)weakSelf = self;
-    
     [signal subscribeNext:^(RACTuple *arguments) {
         __strong typeof(weakSelf)strongSelf = weakSelf;
         if (strongSelf.searchBar == arguments.first) {
-            [self makeARequestCall];        }
+            [self makeARequestCall];
+        }
     }];
+    
 }
 
 
 #pragma mark - Methods to handle request
 -(void) makeARequestCall{
-    queryString=[[NSMutableString alloc ]initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
-    [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.searchBar.text,self.searchBar.text,self.searchBar.text]];
+    queryString=[[NSMutableString alloc ]initWithString:
+                 @"http://10.3.0.145:9000/Sample3/DBConnector"];
+    [queryString appendString:[NSString stringWithFormat:
+                               @"?Item=%@&Code=%@&Colour=%@",
+                               self.searchBar.text,
+                               self.searchBar.text,
+                               self.searchBar.text]];
     DataHandler *handler=[[DataHandler alloc]init];
     handler.delegate=self;
     [handler getRequest:queryString];
 }
 
-#pragma mark - SearchBar delegate
 
+#pragma mark - SearchBar delegate
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
     NSLog(@"User canceled search");
     [searchBar resignFirstResponder];
 }
 
-
-- (void)refreshPage:(NSMutableArray*)arrayOfObjects{
-    arrayOfContents=arrayOfObjects;
-    [self.tableView reloadData];
+- (void)searchBarSearchButtonClicked:(UISearchBar *) searchBar {
+    [self.view endEditing:YES];
 }
 
 
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *) searchBar {
-    [self.view endEditing:YES];
+#pragma mark - DataHandler delegate
+- (void)refreshPage:(NSMutableArray*)arrayOfObjects{
+    arrayOfContents=arrayOfObjects;
+    [self.tableView reloadData];
 }
 
 
@@ -96,8 +101,6 @@
     return arrayOfContents.count;
 }
 
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *CellIdentifier = @"Cell";
@@ -105,7 +108,6 @@
     cell.item.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Item"];
     cell.code.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Code"];
     cell.colour.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Colour"];
-    
     return cell;
 }
 

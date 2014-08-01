@@ -9,18 +9,29 @@
 #import <Foundation/Foundation.h>
 #import <GetNewViewController.h>
 
+
 @protocol DataHandlerDelegate<NSObject>
-- (void)refreshPage:(NSMutableArray*)arrayOfObjects;
+
+    - (void)refreshPage:(NSMutableArray*)arrayOfObjects;
 
 @end
 
+
+
 @interface DataHandler : NSObject
 
-@property (nonatomic, weak) id <DataHandlerDelegate> delegate;
+    @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+    @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+    @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (void)getRequest:(NSString *)queryString;
-- (void )postRequest:(NSString *)queryString;
-- (void )putRequest:(NSString *)queryString;
-- (void )deleteRequest:(NSString *)queryString;
+    - (void)getRequest:(NSString *)queryString;
+    - (void )postRequest:(NSString *)queryString;
+    - (void )putRequest:(NSString *)queryString;
+    - (void )deleteRequest:(NSString *)queryString;
+    - (void ) reachabilityCheck;
+
+    - (NSURL *)applicationDocumentsDirectory;
+
+    @property (nonatomic, weak) id <DataHandlerDelegate> delegate;
 
 @end

@@ -18,7 +18,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -26,43 +25,57 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    RAC(self.submit, enabled) = [RACSignal
-                                       combineLatest:@[ self.item.rac_textSignal, self.code.rac_textSignal, self.colour.rac_textSignal]
-                                       reduce:^(NSString *itemText, NSString *codeText, NSString *colorText) {
-                                           
+    RAC(self.submit, enabled) = [RACSignal combineLatest:@[ self.item.rac_textSignal,
+                                                            self.code.rac_textSignal,
+                                                            self.colour.rac_textSignal
+                                                            ]
+                                       reduce:^(NSString *itemText,
+                                                NSString *codeText,
+                                                NSString *colorText
+                                                ){
                                            NSString *itemPattern = @"[A-Z0-9a-z@!&]";
                                            NSString *codePattern = @"[0-9]$";
                                            NSString *colourPattern = @"[A-Za-z@!&]";
-                                           
-                                           return @([self validateString:itemText withPattern:itemPattern] && [self validateString:codeText withPattern:codePattern] && [self validateString:colorText withPattern:colourPattern]);
-                                       }];
-
-
+                                           return @(
+                                              [self validateString:itemText withPattern:itemPattern]
+                                           && [self validateString:codeText withPattern:codePattern]
+                                           && [self validateString:colorText withPattern:colourPattern]
+                                           );
+                                       }
+                                 ];
 }
+
+
 -(void) viewWillAppear:(BOOL)animated{
-    [self.view reloadInputViews];
-    [self initializeViews];
+    [super viewWillAppear:animated];
+    [self initializeFields];
 }
 
--(void) initializeViews{
+
+-(void) initializeFields{
     self.item.text=@"";
     self.code.text=@"";
     self.colour.text=@"";
 }
 
+
 - (IBAction)editAnItem:(id)sender {
     [self.view endEditing:YES];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"]];
-    [request setHTTPMethod:@"PUT"];
-    NSString *post = [NSString stringWithFormat:@"%@/%@/%@/",self.item.text,self.code.text,self.colour.text];
-    NSData *requestBodyData = [post dataUsingEncoding:NSUTF8StringEncoding];
-    request.HTTPBody = requestBodyData;
-    NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if(!conn){
-        NSLog(@"No Connection");
-    }
+    DataHandler *handler= [[DataHandler alloc]init];
+    NSString *putString = [NSString stringWithFormat:
+                           @"%@/%@/%@/",
+                           self.item.text,
+                           self.code.text,
+                           self.colour.text];
+    [handler putRequest:putString];
 }
 
+- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern{
+    return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
+}
+
+
+#pragma mark- TextField delegates
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == _item) {
         [_code becomeFirstResponder];
@@ -74,37 +87,13 @@
     return YES;
 }
 
-#pragma mark - NSURL delegate
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"Resposnse Received");
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"Data Received");
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"didFailWithError %@",error);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"connectionDidFinishLoading");
-    [Utilities showAlert:@"Woohoo ! It's done " withTitle:@"Success!"];
-}
-
-
-- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
-{
-    return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
-}
-
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];// this will do the trick
+    [self.view endEditing:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
+#pragma mark- Memory Warning
+
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

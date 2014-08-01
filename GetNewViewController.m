@@ -17,11 +17,11 @@
     NSMutableArray *array;
     NSMutableString *queryString;
 }
+
 @end
 
 
 @implementation GetNewViewController
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,30 +40,36 @@
 }
 
 
-
 -(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     self.search.enabled=YES;
 }
 
 
 - (IBAction)search:(id)sender {
+    DataHandler *handler=[[DataHandler alloc]init];
+    handler.delegate=self;
     self.search.enabled=NO;
     array=[[NSMutableArray alloc]init];
     [self.view endEditing:YES];
-    queryString=[[NSMutableString alloc] initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
-    [queryString appendString:[NSString stringWithFormat:@"?Item=%@&Code=%@&Colour=%@",self.item.text,self.code.text,self.colour.text]];
+    
+    queryString=[[NSMutableString alloc] initWithString:
+                 @"http://10.3.0.145:9000/Sample3/DBConnector"];
+    [queryString appendString:[NSString stringWithFormat:
+                               @"?Item=%@&Code=%@&Colour=%@",
+                               self.item.text,
+                               self.code.text,
+                               self.colour.text]];
     NSLog(@"%@",queryString);
-    DataHandler *handler=[[DataHandler alloc]init];
-    handler.delegate=self;
     [handler getRequest:queryString];
 }
 
 
 
+#pragma mark- TextField Delegates
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
-
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -73,17 +79,7 @@
 
 
 
--(void) sendRequest{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
-                                    [NSURL URLWithString:queryString]];
-    [request setHTTPMethod:@"GET"];
-    NSURLConnection*conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if(!conn){
-        NSLog(@"No Connection");
-    }
-}
-
-
+#pragma mark- DataHandler Delegate
 - (void)refreshPage:(NSMutableArray*)arrayOfObjects{
     array=arrayOfObjects;
     [self performSegueWithIdentifier:@"showGet" sender:self];

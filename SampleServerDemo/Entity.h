@@ -15,5 +15,5 @@
 @property (nonatomic, strong) NSString * item;
 @property (nonatomic, strong) NSString * code;
 @property (nonatomic, strong) NSString * colour;
-@property (nonatomic, assign) BOOL flag;
+@property (nonatomic, assign) int flag;
 @end
