@@ -33,6 +33,11 @@
 		22B8DDD71979066500AAD046 /* valid.png in Resources */ = {isa = PBXBuildFile; fileRef = 22B8DDD51979066500AAD046 /* valid.png */; };
 		22B8DDDA1979385E00AAD046 /* ListedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8DDD91979385E00AAD046 /* ListedViewController.m */; };
 		22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DC5A05197657A100444D37 /* GetNewViewController.m */; };
+		22EE298119A60E0E00890B63 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE298019A60E0E00890B63 /* SettingsManager.m */; };
+		22EE298519A60E2F00890B63 /* StoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE298419A60E2F00890B63 /* StoreManager.m */; };
+		22EE298819A60E5D00890B63 /* ConnectivityAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE298719A60E5D00890B63 /* ConnectivityAnalyzer.m */; };
+		22EE299219A6103500890B63 /* CloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE299119A6103500890B63 /* CloudStorage.m */; };
+		22EE299519A6104F00890B63 /* OfflineStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE299419A6104F00890B63 /* OfflineStorage.m */; };
 		22FA70F01980C9EF00E083AB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22FA70EE1980C9EF00E083AB /* Model.xcdatamodeld */; };
 		22FA70F31980CA8E00E083AB /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA70F21980CA8E00E083AB /* Entity.m */; };
 		B7ECA64D543A4545893CA1D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DE91E0045B4803B0FF67A5 /* libPods.a */; };
@@ -94,6 +99,16 @@
 		22B8DDD91979385E00AAD046 /* ListedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListedViewController.m; path = SampleServerDemo/ListedViewController.m; sourceTree = "<group>"; };
 		22DC5A04197657A100444D37 /* GetNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetNewViewController.h; sourceTree = "<group>"; };
 		22DC5A05197657A100444D37 /* GetNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetNewViewController.m; sourceTree = "<group>"; };
+		22EE297F19A60E0E00890B63 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		22EE298019A60E0E00890B63 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
+		22EE298319A60E2F00890B63 /* StoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreManager.h; sourceTree = "<group>"; };
+		22EE298419A60E2F00890B63 /* StoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreManager.m; sourceTree = "<group>"; };
+		22EE298619A60E5D00890B63 /* ConnectivityAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectivityAnalyzer.h; sourceTree = "<group>"; };
+		22EE298719A60E5D00890B63 /* ConnectivityAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectivityAnalyzer.m; sourceTree = "<group>"; };
+		22EE299019A6103500890B63 /* CloudStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudStorage.h; sourceTree = "<group>"; };
+		22EE299119A6103500890B63 /* CloudStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudStorage.m; sourceTree = "<group>"; };
+		22EE299319A6104F00890B63 /* OfflineStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineStorage.h; sourceTree = "<group>"; };
+		22EE299419A6104F00890B63 /* OfflineStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineStorage.m; sourceTree = "<group>"; };
 		22FA70EF1980C9EF00E083AB /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		22FA70F11980CA8E00E083AB /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		22FA70F21980CA8E00E083AB /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
@@ -129,22 +144,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		22172E89198A2CAD009055BB /* DataHandlerClasses */ = {
-			isa = PBXGroup;
-			children = (
-				22172E8A198A2CE1009055BB /* DataHandler.h */,
-				22172E8B198A2CE1009055BB /* DataHandler.m */,
-			);
-			name = DataHandlerClasses;
-			sourceTree = "<group>";
-		};
 		2229CB00196D43E10059C735 = {
 			isa = PBXGroup;
 			children = (
+				22DC5A04197657A100444D37 /* GetNewViewController.h */,
+				22DC5A05197657A100444D37 /* GetNewViewController.m */,
 				2229CB12196D43E10059C735 /* SampleServerDemo */,
-				2229CB0A196D43E10059C735 /* Products */,
-				2229CB0B196D43E10059C735 /* Frameworks */,
 				2229CB13196D43E10059C735 /* Supporting Files */,
+				2229CB0B196D43E10059C735 /* Frameworks */,
+				2229CB0A196D43E10059C735 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -185,12 +193,9 @@
 				2229CB1E196D43E10059C735 /* Main_iPhone.storyboard */,
 				2229CB1B196D43E10059C735 /* ServerAppDelegate.h */,
 				2229CB1C196D43E10059C735 /* ServerAppDelegate.m */,
-				22172E89198A2CAD009055BB /* DataHandlerClasses */,
-				22DC5A001976570F00444D37 /* GET ViewControllers */,
-				22DC5A031976574F00444D37 /* DELETE ViewControllers */,
-				22DC5A021976574900444D37 /* PUT ViewControllers */,
-				22DC5A011976574200444D37 /* POST ViewControllers */,
-				2229CB53196D4A970059C735 /* OtherViews */,
+				22EE298919A60E7300890B63 /* ViewControllers */,
+				22EE297E19A60D9600890B63 /* Modal Classes */,
+				2229CB53196D4A970059C735 /* Views */,
 				22B8DDD31978FF9D00AAD046 /* Utilities */,
 			);
 			path = SampleServerDemo;
@@ -232,13 +237,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2229CB53196D4A970059C735 /* OtherViews */ = {
+		2229CB53196D4A970059C735 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2229CB54196D4AF00059C735 /* ItemCell.h */,
 				2229CB55196D4AF00059C735 /* ItemCell.m */,
 			);
-			name = OtherViews;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		22B8DDD31978FF9D00AAD046 /* Utilities */ = {
@@ -253,8 +258,6 @@
 		22DC5A001976570F00444D37 /* GET ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				22DC5A04197657A100444D37 /* GetNewViewController.h */,
-				22DC5A05197657A100444D37 /* GetNewViewController.m */,
 				22B8DDD81979385E00AAD046 /* ListedViewController.h */,
 				22B8DDD91979385E00AAD046 /* ListedViewController.m */,
 			);
@@ -287,6 +290,84 @@
 				2229CB51196D4A2A0059C735 /* ServerDeleteAnItemViewController.m */,
 			);
 			name = "DELETE ViewControllers";
+			sourceTree = "<group>";
+		};
+		22EE297E19A60D9600890B63 /* Modal Classes */ = {
+			isa = PBXGroup;
+			children = (
+				22EE298C19A60F8800890B63 /* Connectivity & Settings */,
+				22EE298B19A60F6B00890B63 /* Storage Manager */,
+				22EE298A19A60F3500890B63 /* DataHandler */,
+			);
+			name = "Modal Classes";
+			sourceTree = "<group>";
+		};
+		22EE298919A60E7300890B63 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				22DC5A011976574200444D37 /* POST ViewControllers */,
+				22DC5A001976570F00444D37 /* GET ViewControllers */,
+				22DC5A031976574F00444D37 /* DELETE ViewControllers */,
+				22DC5A021976574900444D37 /* PUT ViewControllers */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		22EE298A19A60F3500890B63 /* DataHandler */ = {
+			isa = PBXGroup;
+			children = (
+				22172E8A198A2CE1009055BB /* DataHandler.h */,
+				22172E8B198A2CE1009055BB /* DataHandler.m */,
+				22EE299619A6181300890B63 /* Subclasses */,
+			);
+			name = DataHandler;
+			sourceTree = "<group>";
+		};
+		22EE298B19A60F6B00890B63 /* Storage Manager */ = {
+			isa = PBXGroup;
+			children = (
+				22EE298319A60E2F00890B63 /* StoreManager.h */,
+				22EE298419A60E2F00890B63 /* StoreManager.m */,
+			);
+			name = "Storage Manager";
+			sourceTree = "<group>";
+		};
+		22EE298C19A60F8800890B63 /* Connectivity & Settings */ = {
+			isa = PBXGroup;
+			children = (
+				22EE297F19A60E0E00890B63 /* SettingsManager.h */,
+				22EE298019A60E0E00890B63 /* SettingsManager.m */,
+				22EE298619A60E5D00890B63 /* ConnectivityAnalyzer.h */,
+				22EE298719A60E5D00890B63 /* ConnectivityAnalyzer.m */,
+			);
+			name = "Connectivity & Settings";
+			sourceTree = "<group>";
+		};
+		22EE299619A6181300890B63 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				22EE299819A6187700890B63 /* Offline */,
+				22EE299719A6185100890B63 /* Cloud */,
+			);
+			name = Subclasses;
+			sourceTree = "<group>";
+		};
+		22EE299719A6185100890B63 /* Cloud */ = {
+			isa = PBXGroup;
+			children = (
+				22EE299019A6103500890B63 /* CloudStorage.h */,
+				22EE299119A6103500890B63 /* CloudStorage.m */,
+			);
+			name = Cloud;
+			sourceTree = "<group>";
+		};
+		22EE299819A6187700890B63 /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				22EE299319A6104F00890B63 /* OfflineStorage.h */,
+				22EE299419A6104F00890B63 /* OfflineStorage.m */,
+			);
+			name = Offline;
 			sourceTree = "<group>";
 		};
 		22FA70ED1980C9E100E083AB /* CoreData */ = {
@@ -446,16 +527,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				22B8DDDA1979385E00AAD046 /* ListedViewController.m in Sources */,
+				22EE298519A60E2F00890B63 /* StoreManager.m in Sources */,
 				2229CB49196D499D0059C735 /* ServerPushNewItemViewController.m in Sources */,
 				2229CB4F196D4A150059C735 /* ServerPutToAnItemViewController.m in Sources */,
 				22B8DDD21978FF9700AAD046 /* Utilities.m in Sources */,
+				22EE299219A6103500890B63 /* CloudStorage.m in Sources */,
 				22172E8C198A2CE1009055BB /* DataHandler.m in Sources */,
+				22EE298819A60E5D00890B63 /* ConnectivityAnalyzer.m in Sources */,
 				2229CB56196D4AF00059C735 /* ItemCell.m in Sources */,
 				2229CB19196D43E10059C735 /* main.m in Sources */,
 				2229CB52196D4A2A0059C735 /* ServerDeleteAnItemViewController.m in Sources */,
 				22FA70F01980C9EF00E083AB /* Model.xcdatamodeld in Sources */,
+				22EE298119A60E0E00890B63 /* SettingsManager.m in Sources */,
 				2229CB1D196D43E10059C735 /* ServerAppDelegate.m in Sources */,
 				22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */,
+				22EE299519A6104F00890B63 /* OfflineStorage.m in Sources */,
 				22FA70F31980CA8E00E083AB /* Entity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

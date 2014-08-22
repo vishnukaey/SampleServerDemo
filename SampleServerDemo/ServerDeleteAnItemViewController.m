@@ -47,16 +47,16 @@
 
 
 - (IBAction)delete:(id)sender {
-    DataHandler* handler = [[DataHandler alloc]init];
     [self.view endEditing:YES];
     NSString *deleteString = [NSString stringWithFormat:@"%@",self.code.text];
-    [handler deleteRequest:deleteString];
     [self resignFirstResponder];
+    StoreManager *manager= [[StoreManager alloc] init];
+    DataHandler *object = [manager getStore];
+    [object deleteRequest:deleteString];
 }
 
 
-- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern
-{
+- (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern{
     return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );
 }
 

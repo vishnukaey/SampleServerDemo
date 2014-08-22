@@ -10,7 +10,7 @@
 #import "ItemCell.h"
 #import "Entity.h"
 
-@interface ListedViewController ()<DataHandlerDelegate>{
+@interface ListedViewController (){
     NSMutableArray *arrayOfContents;
     NSArray *loadedArray;
     NSMutableData *responseData;
@@ -60,6 +60,7 @@
         }
     }];
     
+    
 }
 
 
@@ -72,9 +73,9 @@
                                self.searchBar.text,
                                self.searchBar.text,
                                self.searchBar.text]];
-    DataHandler *handler=[[DataHandler alloc]init];
-    handler.delegate=self;
-    [handler getRequest:queryString];
+    StoreManager *manager= [[StoreManager alloc] init];
+    DataHandler *object = [manager getStore];
+    [object getRequest:queryString];
 }
 
 

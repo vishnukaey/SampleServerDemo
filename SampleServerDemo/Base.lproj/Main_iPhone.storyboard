@@ -17,9 +17,9 @@
                     </tabBar>
                     <connections>
                         <segue destination="F6i-Ns-zcS" kind="relationship" relationship="viewControllers" id="V8d-oT-ZVU"/>
-                        <segue destination="Iic-os-xMG" kind="relationship" relationship="viewControllers" id="SCf-nj-fEd"/>
                         <segue destination="tmM-ZU-pRg" kind="relationship" relationship="viewControllers" id="lYt-ry-Nwf"/>
                         <segue destination="euk-jW-33e" kind="relationship" relationship="viewControllers" id="1ia-6y-kIf"/>
+                        <segue destination="vGY-P9-PuM" kind="relationship" relationship="viewControllers" id="35B-QN-Qng"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMf-Td-iXY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -29,6 +29,7 @@
         <!--Navigation Controller - GET-->
         <scene sceneID="Zp7-SJ-Nb2">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cAP-DX-uqb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="Iic-os-xMG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="GET" id="kkG-kk-ofr"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -36,13 +37,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="f5O-io-kFM" kind="relationship" relationship="rootViewController" id="l7Y-bW-cQe"/>
-                    </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cAP-DX-uqb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="850" y="-1533"/>
+            <point key="canvasLocation" x="114" y="-1625"/>
         </scene>
         <!--Server Push New Item View Controller - POST-->
         <scene sceneID="1MN-JV-jt9">
@@ -351,13 +348,14 @@
         <!--Get New View Controller - GET-->
         <scene sceneID="KLz-4T-W7e">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdN-de-Wwp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="f5O-io-kFM" customClass="GetNewViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="b6G-c4-wgZ"/>
                         <viewControllerLayoutGuide type="bottom" id="uUL-fR-GKB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Mhn-xx-bT8">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kq7-Eb-nGQ">
@@ -440,12 +438,10 @@
                         <outlet property="colour" destination="cjT-c1-uGx" id="oiK-87-sGU"/>
                         <outlet property="item" destination="fPn-zi-U3W" id="hXg-nY-BYz"/>
                         <outlet property="search" destination="eNL-ea-RmQ" id="N8L-zy-THB"/>
-                        <segue destination="vGY-P9-PuM" kind="push" identifier="showGet" id="MN9-md-Job"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pdN-de-Wwp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1274" y="-1538"/>
+            <point key="canvasLocation" x="250" y="-1734"/>
         </scene>
         <!--Server Delete An Item View Controller - DELETE-->
         <scene sceneID="yIu-Ni-YIg">
@@ -545,10 +541,10 @@
             </objects>
             <point key="canvasLocation" x="865" y="745"/>
         </scene>
-        <!--Listed View Controller-->
+        <!--Listed View Controller - GET-->
         <scene sceneID="8IB-R6-ot2">
             <objects>
-                <viewController id="vGY-P9-PuM" customClass="ListedViewController" sceneMemberID="viewController">
+                <viewController title="GET" id="vGY-P9-PuM" customClass="ListedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fSD-iA-Hse"/>
                         <viewControllerLayoutGuide type="bottom" id="NpE-69-Jvf"/>
@@ -558,7 +554,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="135" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gwf-hc-YCU">
-                                <rect key="frame" x="0.0" y="44" width="320" height="435"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="436"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -618,15 +614,17 @@
                         <constraints>
                             <constraint firstItem="gwf-hc-YCU" firstAttribute="leading" secondItem="8sl-Qx-qw9" secondAttribute="leading" id="20f-nr-YoU"/>
                             <constraint firstItem="BPE-WL-h9z" firstAttribute="bottom" secondItem="gwf-hc-YCU" secondAttribute="top" id="25C-BH-l06"/>
-                            <constraint firstItem="BPE-WL-h9z" firstAttribute="top" secondItem="8sl-Qx-qw9" secondAttribute="top" id="4gr-H8-noh"/>
                             <constraint firstAttribute="trailing" secondItem="BPE-WL-h9z" secondAttribute="trailing" id="5kj-5Y-wqT"/>
                             <constraint firstItem="BPE-WL-h9z" firstAttribute="leading" secondItem="8sl-Qx-qw9" secondAttribute="leading" id="LeM-op-1Aj"/>
                             <constraint firstAttribute="bottom" secondItem="gwf-hc-YCU" secondAttribute="bottom" constant="25" id="dT6-Vs-d9w"/>
                             <constraint firstAttribute="trailing" secondItem="gwf-hc-YCU" secondAttribute="trailing" id="oRT-p6-lSH"/>
                             <constraint firstItem="gwf-hc-YCU" firstAttribute="top" secondItem="BPE-WL-h9z" secondAttribute="bottom" id="sMb-Zk-bkE"/>
+                            <constraint firstItem="BPE-WL-h9z" firstAttribute="top" secondItem="fSD-iA-Hse" secondAttribute="bottom" id="zir-uA-pMR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="xSF-sx-Udh"/>
+                    <tabBarItem key="tabBarItem" title="GET" id="WaB-PM-KUk"/>
+                    <navigationItem key="navigationItem" title="GET" id="xSF-sx-Udh"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="searchBar" destination="BPE-WL-h9z" id="X89-yf-pg3"/>
                         <outlet property="searchDisplayController" destination="pqM-ca-Xsx" id="BwB-PC-AFc"/>
@@ -643,7 +641,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1830" y="-1538"/>
+            <point key="canvasLocation" x="850" y="-1552"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

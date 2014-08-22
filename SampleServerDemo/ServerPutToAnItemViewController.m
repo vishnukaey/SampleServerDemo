@@ -29,7 +29,7 @@
                                                             self.code.rac_textSignal,
                                                             self.colour.rac_textSignal
                                                             ]
-                                       reduce:^(NSString *itemText,
+                                    reduce:^(NSString *itemText,
                                                 NSString *codeText,
                                                 NSString *colorText
                                                 ){
@@ -61,14 +61,17 @@
 
 - (IBAction)editAnItem:(id)sender {
     [self.view endEditing:YES];
-    DataHandler *handler= [[DataHandler alloc]init];
     NSString *putString = [NSString stringWithFormat:
                            @"%@/%@/%@/",
                            self.item.text,
                            self.code.text,
                            self.colour.text];
-    [handler putRequest:putString];
+    StoreManager *manager= [[StoreManager alloc] init];
+    DataHandler *object = [manager getStore];
+    [object putRequest:putString];
 }
+
+
 
 - (BOOL)validateString:(NSString *)string withPattern:(NSString *)pattern{
     return ([string rangeOfString:pattern options:NSRegularExpressionSearch].location != NSNotFound );

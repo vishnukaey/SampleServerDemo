@@ -1,16 +1,18 @@
 //
-//  DataHandler.h
+//  CloudStorage.h
 //  SampleServerDemo
 //
-//  Created by qbadmin on 31/07/14.
+//  Created by Vishnu on 21/08/14.
 //  Copyright (c) 2014 Vishnu. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "DataHandler.h"
 
-@interface DataHandler : NSObject
+@interface CloudStorage : DataHandler
+
     - (void)getRequest:(NSString *)queryString;
     - (void )postRequest:(NSString *)queryString;
     - (void )putRequest:(NSString *)queryString;
     - (void )deleteRequest:(NSString *)queryString;
+
 @end

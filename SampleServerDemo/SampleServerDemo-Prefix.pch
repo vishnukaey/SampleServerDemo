@@ -18,4 +18,5 @@
     #import <Reachability/Reachability.h>
     #import <Entity.h>
     #import <DataHandler.h>
+    #import <StoreManager.h>
 #endif

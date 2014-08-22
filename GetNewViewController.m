@@ -12,7 +12,7 @@
 #import "Entity.h"
 
 
-@interface GetNewViewController ()<DataHandlerDelegate>{
+@interface GetNewViewController (){
     NSMutableData *responseData;
     NSMutableArray *array;
     NSMutableString *queryString;
@@ -35,8 +35,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     responseData = [NSMutableData data];
-    NSLog(@"Get");
-    
 }
 
 
@@ -47,8 +45,6 @@
 
 
 - (IBAction)search:(id)sender {
-    DataHandler *handler=[[DataHandler alloc]init];
-    handler.delegate=self;
     self.search.enabled=NO;
     array=[[NSMutableArray alloc]init];
     [self.view endEditing:YES];
@@ -60,8 +56,9 @@
                                self.item.text,
                                self.code.text,
                                self.colour.text]];
-    NSLog(@"%@",queryString);
-    [handler getRequest:queryString];
+    StoreManager *manager= [[StoreManager alloc] init];
+    DataHandler *object = [manager getStore];
+    [object getRequest:queryString];
 }
 
 
