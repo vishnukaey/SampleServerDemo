@@ -39,7 +39,6 @@
 		22EE299219A6103500890B63 /* CloudStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE299119A6103500890B63 /* CloudStorage.m */; };
 		22EE299519A6104F00890B63 /* OfflineStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE299419A6104F00890B63 /* OfflineStorage.m */; };
 		22FA70F01980C9EF00E083AB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22FA70EE1980C9EF00E083AB /* Model.xcdatamodeld */; };
-		22FA70F31980CA8E00E083AB /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA70F21980CA8E00E083AB /* Entity.m */; };
 		B7ECA64D543A4545893CA1D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DE91E0045B4803B0FF67A5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2214232319AC4C5000E1FA83 /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = en; path = en.lproj/Entity.h; sourceTree = "<group>"; };
+		2214232519AC4C5000E1FA83 /* en */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = en; path = en.lproj/Entity.m; sourceTree = "<group>"; };
 		22172E8A198A2CE1009055BB /* DataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHandler.h; sourceTree = "<group>"; };
 		22172E8B198A2CE1009055BB /* DataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataHandler.m; sourceTree = "<group>"; };
 		2229CB09196D43E10059C735 /* SampleServerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleServerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,8 +111,6 @@
 		22EE299319A6104F00890B63 /* OfflineStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineStorage.h; sourceTree = "<group>"; };
 		22EE299419A6104F00890B63 /* OfflineStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineStorage.m; sourceTree = "<group>"; };
 		22FA70EF1980C9EF00E083AB /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		22FA70F11980CA8E00E083AB /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
-		22FA70F21980CA8E00E083AB /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
 		4034D0AC389F43DCB3DAD7E5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F8DE91E0045B4803B0FF67A5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -374,8 +373,8 @@
 			isa = PBXGroup;
 			children = (
 				22FA70EE1980C9EF00E083AB /* Model.xcdatamodeld */,
-				22FA70F11980CA8E00E083AB /* Entity.h */,
-				22FA70F21980CA8E00E083AB /* Entity.m */,
+				2214232219AC4C5000E1FA83 /* Entity.h */,
+				2214232419AC4C5000E1FA83 /* Entity.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -542,7 +541,6 @@
 				2229CB1D196D43E10059C735 /* ServerAppDelegate.m in Sources */,
 				22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */,
 				22EE299519A6104F00890B63 /* OfflineStorage.m in Sources */,
-				22FA70F31980CA8E00E083AB /* Entity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +563,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2214232219AC4C5000E1FA83 /* Entity.h */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2214232319AC4C5000E1FA83 /* en */,
+			);
+			name = Entity.h;
+			sourceTree = "<group>";
+		};
+		2214232419AC4C5000E1FA83 /* Entity.m */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2214232519AC4C5000E1FA83 /* en */,
+			);
+			name = Entity.m;
+			sourceTree = "<group>";
+		};
 		2229CB15196D43E10059C735 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

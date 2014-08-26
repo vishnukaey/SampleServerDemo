@@ -2,7 +2,7 @@
 //  Entity.m
 //  SampleServerDemo
 //
-//  Created by qbadmin on 24/07/14.
+//  Created by Vishnu on 26/08/14.
 //  Copyright (c) 2014 Vishnu. All rights reserved.
 //
 
@@ -11,9 +11,9 @@
 
 @implementation Entity
 
-@dynamic item;
 @dynamic code;
-@dynamic flag;
 @dynamic colour;
+@dynamic flag;
+@dynamic item;
 
 @end

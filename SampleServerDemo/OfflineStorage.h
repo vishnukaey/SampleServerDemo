@@ -10,13 +10,20 @@
 
 @interface OfflineStorage : DataHandler
 
-    @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-    @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-    @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+#pragma mark - CoreData
+    @property ( strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+    @property ( strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+    @property ( strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
     - (NSURL *)applicationDocumentsDirectory;
-    - (void)getRequest:(NSString *)queryString;
+
+
+#pragma mark - Overridden methods
+
+    - (NSArray*)getRequest:(NSString *)queryString;
     - (void )postRequest:(NSString *)queryString;
     - (void )putRequest:(NSString *)queryString;
     - (void )deleteRequest:(NSString *)queryString;
-
+    - (NSArray*)getRequest;
+    -(void) deleteAllData;
 @end

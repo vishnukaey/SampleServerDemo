@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
+
 @interface DataHandler : NSObject
-    - (void)getRequest:(NSString *)queryString;
+    - (NSArray*)getRequest:(NSString *)queryString;
     - (void )postRequest:(NSString *)queryString;
     - (void )putRequest:(NSString *)queryString;
     - (void )deleteRequest:(NSString *)queryString;

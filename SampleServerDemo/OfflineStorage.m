@@ -6,132 +6,149 @@
 //  Copyright (c) 2014 Vishnu. All rights reserved.
 
 #import "OfflineStorage.h"
-#import "ConnectivityAnalyzer.h"
 
 
-@implementation OfflineStorage{
-    NSMutableArray *array;
-    NSArray *loadedArray;
-    NSString *requestMethodType;
-}
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@implementation OfflineStorage
 
 #pragma mark - Overridden Methods
 
-
-- (void)getRequest:(NSString *)queryString{
+- (NSArray*)getRequest:(NSString *)queryString{
      NSLog(@"GET - OFFLINE");
-    [self loadFromDevice];
-    [self getValuesFromLoadedArray];
+    NSArray *allEntities = [self getValuesFromLoadedArray:[self loadFromDevice]];
+    return [self getUndeletedEntitites:allEntities];
 }
+
 
 - (void )postRequest:(NSString *)queryString{
      NSLog(@"POST - OFFLINE");
-    requestMethodType = @"POST";
-    NSArray *values=[self getItemFromQueryString:queryString];
-    [self sendOfflineRequest:values];
-    
+    [self sendOfflineRequest:@"POST" withEntity:[self getObjectFromQueryString:queryString]];
 }
+
 
 - (void )putRequest:(NSString *)queryString{
      NSLog(@"PUT - OFFLINE");
-    requestMethodType = @"PUT";
-    NSArray *values=[self getItemFromQueryString:queryString];
-    [self sendOfflineRequest:values];
+    [self sendOfflineRequest:@"PUT" withEntity:[self getObjectFromQueryString:queryString]];
 }
+
 
 - (void )deleteRequest:(NSString *)queryString{
      NSLog(@"DELETE - OFFLINE");
-    requestMethodType = @"DELETE";
-    NSArray *values=[self getItemFromQueryString:queryString];
-    [self sendOfflineRequest:values];
+    [self sendOfflineRequest:@"DELETE" withEntity:[self getObjectFromQueryString:queryString]];
 }
 
 
 
+- (NSArray*)getRequest{
+    return [self getValuesFromLoadedArray:[self loadFromDevice]];
+}
 
 
-
--(void) saveToDevice{
-    NSManagedObjectContext *context =
-    [self managedObjectContext];
-    NSError *error;
-    [self deleteAllData];
-    for(int i=0;i<array.count;i++){
+-(void)sendOfflineRequest:(NSString*)requestMethodType withEntity:(NSArray*)currentEntity{
+    if([requestMethodType isEqualToString:@"POST"])
+    {
+        NSManagedObjectContext *context = [self managedObjectContext];
+        NSError *error;
         NSManagedObject *newContact;
-        newContact = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
-                                                   inManagedObjectContext:context];
-        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Item"] forKey:@"item"];
-        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Code"] forKey:@"code"];
-        [newContact setValue:[[array objectAtIndex:i] valueForKey:@"Colour"] forKey:@"colour"];
+        newContact = [NSEntityDescription insertNewObjectForEntityForName:
+                      @"Entity" inManagedObjectContext:context];
+        [newContact setValue:[currentEntity objectAtIndex:0] forKey:@"Item"];
+        [newContact setValue:[currentEntity objectAtIndex:1] forKey:@"Code"];
+        [newContact setValue:[currentEntity objectAtIndex:2] forKey:@"Colour"];
+        [context save:&error];
+    }
+        
+    NSArray *loadedArray=[self loadFromDevice];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    for(NSManagedObject *entity in loadedArray)
+    {
+        NSString *currentEntityCode;
+        if([requestMethodType isEqualToString:@"DELETE"])
+            currentEntityCode=[currentEntity objectAtIndex:0];
+        else
+            currentEntityCode=[currentEntity objectAtIndex:1];
+        
+        if([[entity valueForKey:@"code"] isEqualToString:currentEntityCode]){
+            if([requestMethodType isEqualToString:@"POST"]){
+                [entity setValue:@"1" forKey:@"flag"];
+            }
+            else if([requestMethodType isEqualToString:@"PUT"]){
+                [entity setValue:@"2" forKey:@"flag"];
+                [entity setValue:[currentEntity objectAtIndex:0] forKey:@"item"];
+                [entity setValue:[currentEntity objectAtIndex:2] forKey:@"colour"];
+            }
+            else if([requestMethodType isEqualToString:@"DELETE"]){
+                [entity setValue:@"3" forKey:@"flag"];
+            }
+            break;
+        }
     }
     [context save:&error];
 }
 
 
 
--(void)deleteAllData{
-    NSManagedObjectContext *context =
-    [self managedObjectContext];
-    for(NSManagedObject *object in loadedArray){
-        [context deleteObject:object];
-    }
-}
-
-
-
--(void) getValuesFromLoadedArray{
-    array = [[NSMutableArray alloc] init];
-    for (Entity *entity in loadedArray) {
-        NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
-        [dict setObject:entity.item forKey:@"Item"];
-        [dict setObject:entity.code forKey:@"Code"];
-        [dict setObject:entity.colour forKey:@"Colour"];
-        [array addObject:dict];
-    }
-    NSLog(@"%@",array);
-}
-
--(NSArray*)getItemFromQueryString:(NSString*)queryString{
+-(NSArray*)getObjectFromQueryString:(NSString*)queryString{
     NSArray *item;
     item=[queryString componentsSeparatedByString:@"/"];
-    return item;
+        return item;
 }
 
--(void)sendOfflineRequest:(NSArray*)requestParam{
-    [self loadFromDevice];
-    for(Entity *entity in loadedArray)
-    {
-        if([entity.item isEqualToString:[requestParam objectAtIndex:1]]){
-            if([requestMethodType isEqualToString:@"POST"]){
-                entity.flag=1;
-                entity.item=[requestParam objectAtIndex:0];
-                entity.colour=[requestParam objectAtIndex:2];
-            }
-            
-            else if([requestMethodType isEqualToString:@"PUT"]){
-                entity.flag=2;
-            }
-            else if([requestMethodType isEqualToString:@"DELETE"]){
-                entity.flag=3;
-            }
-            break;
+
+-(NSArray *) getUndeletedEntitites:(NSArray*) array{
+    NSMutableArray *undeletedArray = [[NSMutableArray alloc] init];
+    for (int i = 0 ; i < array.count ; i++){
+        NSDictionary *dict = [array objectAtIndex:i];
+        if(![[dict valueForKey:@"flag"] isEqual:@"3"]){
+            [undeletedArray addObject:dict];
         }
+    }
+    return undeletedArray;
+}
+
+-(void)deleteAllData{
+    NSManagedObjectContext *moc =
+    [self managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"Entity" inManagedObjectContext:moc];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    NSError *error;
+    NSArray *loadedArray = [moc executeFetchRequest:request error:&error];
+    for(NSManagedObject *object in loadedArray){
+        [moc deleteObject:object];
     }
 }
 
--(void) loadFromDevice{
-    loadedArray = [[NSArray alloc] init];
+
+-(NSArray *) loadFromDevice{
     NSManagedObjectContext *moc = [self managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription
                                               entityForName:@"Entity" inManagedObjectContext:moc];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
     NSError *error;
-    loadedArray=[moc executeFetchRequest:request error:&error];
+    return [moc executeFetchRequest:request error:&error];
+
 }
+
+
+-(NSMutableArray*) getValuesFromLoadedArray:(NSArray*)loadedArray{
+    NSMutableArray *array= [[NSMutableArray alloc] init];
+    for (Entity *entity in loadedArray) {
+        NSMutableDictionary *dict=[[NSMutableDictionary alloc]init];
+        [dict setObject:entity.item forKey:@"Item"];
+        [dict setObject:entity.code forKey:@"Code"];
+        [dict setObject:entity.colour forKey:@"Colour"];
+        [dict setObject:entity.flag forKey:@"flag"];
+        [array addObject:dict];
+    }
+    return array;
+}
+
+
+
+
 
 #pragma mark - Core Data stack
 

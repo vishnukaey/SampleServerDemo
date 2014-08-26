@@ -53,6 +53,7 @@
     StoreManager *manager= [[StoreManager alloc] init];
     DataHandler *object = [manager getStore];
     [object deleteRequest:deleteString];
+    [Utilities showAlert:@"Deleted !" withTitle:@"Success"];
 }
 
 

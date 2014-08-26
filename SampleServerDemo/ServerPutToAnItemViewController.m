@@ -69,6 +69,7 @@
     StoreManager *manager= [[StoreManager alloc] init];
     DataHandler *object = [manager getStore];
     [object putRequest:putString];
+    [Utilities showAlert:@"Edited !" withTitle:@"Success"];
 }
 
 

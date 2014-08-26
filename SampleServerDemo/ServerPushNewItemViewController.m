@@ -66,6 +66,7 @@
     StoreManager *manager= [[StoreManager alloc] init];
     DataHandler *object = [manager getStore];
     [object postRequest:postString];
+    [Utilities showAlert:@"Added !" withTitle:@"Success"];
     [self resignFirstResponder];
 }
 

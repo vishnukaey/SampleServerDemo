@@ -11,8 +11,10 @@
 #import <ReactiveCocoa.h>
 #import <CoreData/CoreData.h>
 
+
+
 @interface ListedViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) NSArray *array;
+    @property (weak, nonatomic) IBOutlet UITableView *tableView;
+    @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+    @property (nonatomic, strong) NSArray *array;
 @end

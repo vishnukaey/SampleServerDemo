@@ -9,8 +9,9 @@
 #import "ListedViewController.h"
 #import "ItemCell.h"
 #import "Entity.h"
+#import "CloudStorage.h"
 
-@interface ListedViewController (){
+@interface ListedViewController  () {
     NSMutableArray *arrayOfContents;
     NSArray *loadedArray;
     NSMutableData *responseData;
@@ -32,6 +33,8 @@
 
 
 - (void)viewDidLoad{
+//    CloudStorage *cld= [[CloudStorage alloc] init];
+//    cld.delegate = self;
     
     [super viewDidLoad];
     responseData = [NSMutableData data];
@@ -75,7 +78,10 @@
                                self.searchBar.text]];
     StoreManager *manager= [[StoreManager alloc] init];
     DataHandler *object = [manager getStore];
-    [object getRequest:queryString];
+    arrayOfContents = [[object getRequest:queryString] mutableCopy];
+    [self.tableView reloadData];
+    
+    
 }
 
 
@@ -91,8 +97,8 @@
 
 
 #pragma mark - DataHandler delegate
-- (void)refreshPage:(NSMutableArray*)arrayOfObjects{
-    arrayOfContents=arrayOfObjects;
+- (void)refreshTableView:(NSArray*)arrayOfObjects{
+    arrayOfContents=[arrayOfObjects mutableCopy];
     [self.tableView reloadData];
 }
 
