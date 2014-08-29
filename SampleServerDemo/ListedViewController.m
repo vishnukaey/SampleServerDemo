@@ -39,8 +39,7 @@
     [super viewDidLoad];
     responseData = [NSMutableData data];
     arrayOfContents=[NSMutableArray arrayWithArray:_array];
-    
-    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self.tableView addPullToRefreshWithActionHandler:^{
         [self makeARequestCall];
         [self.tableView.pullToRefreshView stopAnimating];
     } withBackgroundColor:[UIColor lightGrayColor]];
@@ -78,10 +77,12 @@
                                self.searchBar.text]];
     StoreManager *manager= [[StoreManager alloc] init];
     DataHandler *object = [manager getStore];
-    arrayOfContents = [[object getRequest:queryString] mutableCopy];
-    [self.tableView reloadData];
-    
-    
+    [object getRequest:queryString requestSucceeded:^(NSArray *array) {
+        arrayOfContents = [array mutableCopy];
+        [self.tableView reloadData];
+    } requestFailed:^(NSError *error) {
+        NSLog(@"Error Recieving data");
+    }];
 }
 
 
@@ -117,6 +118,7 @@
     cell.colour.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Colour"];
     return cell;
 }
+
 
 
 - (void)didReceiveMemoryWarning{

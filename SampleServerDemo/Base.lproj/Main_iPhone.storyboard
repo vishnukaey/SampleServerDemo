@@ -631,7 +631,7 @@
                     <connections>
                         <outlet property="searchBar" destination="BPE-WL-h9z" id="X89-yf-pg3"/>
                         <outlet property="searchDisplayController" destination="pqM-ca-Xsx" id="BwB-PC-AFc"/>
-                        <outlet property="tableView" destination="gwf-hc-YCU" id="KkN-0F-Nmy"/>
+                        <outlet property="tableView" destination="gwf-hc-YCU" id="gwg-mm-rSx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAr-EN-tMt" userLabel="First Responder" sceneMemberID="firstResponder"/>

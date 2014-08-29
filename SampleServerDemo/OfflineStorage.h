@@ -20,10 +20,13 @@
 
 #pragma mark - Overridden methods
 
-    - (NSArray*)getRequest:(NSString *)queryString;
+    @property (strong, nonatomic) Success successRequestCallBack;
+    @property (nonatomic, strong) Failure failureCallback;
+
+    - (void )getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *))success requestFailed:(void (^)(NSError *))failure;
     - (void )postRequest:(NSString *)queryString;
     - (void )putRequest:(NSString *)queryString;
     - (void )deleteRequest:(NSString *)queryString;
     - (NSArray*)getRequest;
-    -(void) deleteAllData;
+    -(void)deletePermanently:(NSString *)queryString;
 @end

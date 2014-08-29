@@ -20,10 +20,7 @@
 @implementation DataHandler
 
 
-
-
--(NSArray* ) getRequest:(NSString *) queryString{
-    return 0;
+- (void )getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *array))success requestFailed:(void (^)(NSError *error))failure{
 }
 
 

@@ -12,10 +12,20 @@
 
 #pragma mark - Overridden Methods
 
-- (NSArray*)getRequest:(NSString *)queryString{
+- (void)getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *))success requestFailed:(void (^)(NSError *))failure{
      NSLog(@"GET - OFFLINE");
+    NSError *error;
     NSArray *allEntities = [self getValuesFromLoadedArray:[self loadFromDevice]];
-    return [self getUndeletedEntitites:allEntities];
+    
+    self.successRequestCallBack = success;
+    self.failureCallback = failure;
+    
+    if(allEntities)
+        self.successRequestCallBack(allEntities);
+    else
+        self.failureCallback(error);
+    
+//    [self getUndeletedEntitites:allEntities];
 }
 
 
@@ -37,7 +47,6 @@
 }
 
 
-
 - (NSArray*)getRequest{
     return [self getValuesFromLoadedArray:[self loadFromDevice]];
 }
@@ -54,6 +63,7 @@
         [newContact setValue:[currentEntity objectAtIndex:0] forKey:@"Item"];
         [newContact setValue:[currentEntity objectAtIndex:1] forKey:@"Code"];
         [newContact setValue:[currentEntity objectAtIndex:2] forKey:@"Colour"];
+        [newContact setValue:@"" forKey:@"flag"];
         [context save:&error];
     }
         
@@ -106,17 +116,14 @@
     return undeletedArray;
 }
 
--(void)deleteAllData{
-    NSManagedObjectContext *moc =
-    [self managedObjectContext];
-    NSEntityDescription *entityDescription = [NSEntityDescription
-                                              entityForName:@"Entity" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-    NSError *error;
-    NSArray *loadedArray = [moc executeFetchRequest:request error:&error];
-    for(NSManagedObject *object in loadedArray){
-        [moc deleteObject:object];
+-(void)deletePermanently:(NSString *)queryString{
+    NSArray *loadedArray=[self loadFromDevice];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    for(NSManagedObject *entity in loadedArray)
+    {
+        if([[entity valueForKey:@"code"] isEqualToString:queryString]){
+            [context deleteObject:entity];
+        }
     }
 }
 

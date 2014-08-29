@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 
 
+typedef void (^Success)(NSArray *array);
+typedef void (^Failure)(NSError *error);
 
 @interface DataHandler : NSObject
-    - (NSArray*)getRequest:(NSString *)queryString;
+
+    @property (strong, nonatomic) Success successRequestCallBack;
+    @property (nonatomic, strong) Failure failureCallback;
+
+    - (void )getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *array))success requestFailed:(void (^)(NSError *error))failure;
     - (void )postRequest:(NSString *)queryString;
     - (void )putRequest:(NSString *)queryString;
     - (void )deleteRequest:(NSString *)queryString;

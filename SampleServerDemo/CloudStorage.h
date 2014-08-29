@@ -8,15 +8,18 @@
 
 #import "DataHandler.h"
 
-//@protocol CloudStorageDelegate <NSObject>
-//    -(void) refreshTableView :(NSArray *) array;
-//@end
-//
 
-@interface CloudStorage : DataHandler
-//    @property (nonatomic, weak) id <CloudStorageDelegate> delegate;
-    - (NSArray*)getRequest:(NSString *)queryString;
+//typedef void (^Success)(NSArray *array);
+//typedef void (^Failure)(NSError *error);
+
+@interface CloudStorage : DataHandler <NSURLConnectionDataDelegate>
+
+    @property (strong, nonatomic) Success successRequestCallBack;
+    @property (nonatomic, strong) Failure failureCallback;
+
+    - (void )getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *array))success requestFailed:(void (^)(NSError *error))failure;
     - (void )postRequest:(NSString *)queryString;
     - (void )putRequest:(NSString *)queryString;
     - (void )deleteRequest:(NSString *)queryString;
+
 @end

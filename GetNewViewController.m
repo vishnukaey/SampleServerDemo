@@ -56,9 +56,9 @@
                                self.item.text,
                                self.code.text,
                                self.colour.text]];
-    StoreManager *manager= [[StoreManager alloc] init];
-    DataHandler *object = [manager getStore];
-    [object getRequest:queryString];
+//    StoreManager *manager = [[StoreManager alloc] init];
+//    DataHandler *object = [manager getStore];
+//    [object getRequest:queryString];
 }
 
 

@@ -315,8 +315,8 @@
 		22EE298A19A60F3500890B63 /* DataHandler */ = {
 			isa = PBXGroup;
 			children = (
-				22172E8A198A2CE1009055BB /* DataHandler.h */,
 				22172E8B198A2CE1009055BB /* DataHandler.m */,
+				22172E8A198A2CE1009055BB /* DataHandler.h */,
 				22EE299619A6181300890B63 /* Subclasses */,
 			);
 			name = DataHandler;
