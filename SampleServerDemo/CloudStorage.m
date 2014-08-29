@@ -10,6 +10,7 @@
 #import "OfflineStorage.h"
 
 @implementation CloudStorage{
+    
     NSMutableData *responseData;
     NSString *requestMethodType;
 }
@@ -20,12 +21,10 @@
 - (void )getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *array))success requestFailed:(void (^)(NSError *error))failure{
     
     NSLog(@"GET - CLOUD");
-   
     self.successRequestCallBack = success;
     self.failureCallback = failure;
-    
     [self sendGetRequest:queryString ofType:@"GET"];
-//    [self updateOnlineDatabaseWhenConnectionIsCreated];
+    [self updateOnlineDatabaseWhenConnectionIsCreated];
 }
 
 - (void )postRequest:(NSString *)queryString{
@@ -118,7 +117,7 @@
                                [[offlineArray objectAtIndex:i] valueForKey:@"Item"],
                                [[offlineArray objectAtIndex:i] valueForKey:@"Code"],
                                [[offlineArray objectAtIndex:i] valueForKey:@"Colour"]]];
-            else
+            else if ([[[offlineArray objectAtIndex:i] valueForKey:@"flag"] isEqualToString:@"2"])
                 [self deleteRequest:[[offlineArray objectAtIndex:i] valueForKey:@"Code"]];
         }
     }

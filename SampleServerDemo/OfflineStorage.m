@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Vishnu. All rights reserved.
 
 #import "OfflineStorage.h"
+#import "ConnectivityAnalyzer.h"
+
 
 
 @implementation OfflineStorage
@@ -16,16 +18,14 @@
      NSLog(@"GET - OFFLINE");
     NSError *error;
     NSArray *allEntities = [self getValuesFromLoadedArray:[self loadFromDevice]];
-    
     self.successRequestCallBack = success;
     self.failureCallback = failure;
-    
-    if(allEntities)
-        self.successRequestCallBack(allEntities);
+    NSArray *undeletedEntries = [self getUndeletedEntitites:allEntities];
+    if(undeletedEntries)
+        self.successRequestCallBack(undeletedEntries);
     else
         self.failureCallback(error);
     
-//    [self getUndeletedEntitites:allEntities];
 }
 
 
@@ -70,6 +70,7 @@
     NSArray *loadedArray=[self loadFromDevice];
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
+    ConnectivityAnalyzer *connection = [ConnectivityAnalyzer instance];
     for(NSManagedObject *entity in loadedArray)
     {
         NSString *currentEntityCode;
@@ -78,7 +79,7 @@
         else
             currentEntityCode=[currentEntity objectAtIndex:1];
         
-        if([[entity valueForKey:@"code"] isEqualToString:currentEntityCode]){
+        if([[entity valueForKey:@"code"] isEqualToString:currentEntityCode] && !connection.canConnectToInternet){
             if([requestMethodType isEqualToString:@"POST"]){
                 [entity setValue:@"1" forKey:@"flag"];
             }
