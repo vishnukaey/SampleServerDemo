@@ -136,7 +136,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
     if(queryString && queryString.length > 0){
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"item contains[cd] %@",queryString];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"item contains[cd] %@ OR code contains[cd] %@ OR colour contains[cd] %@ ",queryString,queryString,queryString];
         [request setPredicate:predicate];
     }
     NSError *error;

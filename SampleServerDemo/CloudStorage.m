@@ -52,7 +52,7 @@
     
     responseData = [[NSMutableData alloc] init];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
-                                    [NSURL URLWithString:queryString]];
+                                    [NSURL URLWithString:query]];
     [request setHTTPMethod:methodType];
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     if(!conn){
