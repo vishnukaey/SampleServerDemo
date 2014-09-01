@@ -33,9 +33,6 @@
 
 
 - (void)viewDidLoad{
-//    CloudStorage *cld= [[CloudStorage alloc] init];
-//    cld.delegate = self;
-    
     [super viewDidLoad];
     responseData = [NSMutableData data];
     arrayOfContents=[NSMutableArray arrayWithArray:_array];
@@ -44,12 +41,10 @@
         [self.tableView.pullToRefreshView stopAnimating];
     } withBackgroundColor:[UIColor lightGrayColor]];
     
-    
     [RACObserve(self.searchBar, text)
      subscribeNext:^(NSString *newName) {
          [self makeARequestCall];
      }];
-    
     
     RACSignal *signal = [self rac_signalForSelector:
                          @selector(searchBar:textDidChange:) fromProtocol:
@@ -68,13 +63,7 @@
 
 #pragma mark - Methods to handle request
 -(void) makeARequestCall{
-    queryString=[[NSMutableString alloc ]initWithString:
-                 @"http://10.3.0.145:9000/Sample3/DBConnector"];
-    [queryString appendString:[NSString stringWithFormat:
-                               @"?Item=%@&Code=%@&Colour=%@",
-                               self.searchBar.text,
-                               self.searchBar.text,
-                               self.searchBar.text]];
+    queryString=[[NSMutableString alloc ]initWithString:self.searchBar.text];
     StoreManager *manager= [[StoreManager alloc] init];
     DataHandler *object = [manager getStore];
     [object getRequest:queryString requestSucceeded:^(NSArray *array) {
@@ -109,6 +98,7 @@
     return arrayOfContents.count;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *CellIdentifier = @"Cell";
@@ -118,8 +108,6 @@
     cell.colour.text=[[arrayOfContents objectAtIndex:indexPath.row] valueForKey:@"Colour"];
     return cell;
 }
-
-
 
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];

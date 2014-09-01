@@ -17,7 +17,7 @@
 - (void)getRequest:(NSString *)queryString requestSucceeded:(void (^)(NSArray *))success requestFailed:(void (^)(NSError *))failure{
      NSLog(@"GET - OFFLINE");
     NSError *error;
-    NSArray *allEntities = [self getValuesFromLoadedArray:[self loadFromDevice]];
+    NSArray *allEntities = [self getValuesFromLoadedArray:[self loadFromDevice:queryString]];
     self.successRequestCallBack = success;
     self.failureCallback = failure;
     NSArray *undeletedEntries = [self getUndeletedEntitites:allEntities];
@@ -48,7 +48,7 @@
 
 
 - (NSArray*)getRequest{
-    return [self getValuesFromLoadedArray:[self loadFromDevice]];
+    return [self getValuesFromLoadedArray:[self loadFromDevice:@""]];
 }
 
 
@@ -67,7 +67,7 @@
         [context save:&error];
     }
         
-    NSArray *loadedArray=[self loadFromDevice];
+    NSArray *loadedArray=[self loadFromDevice:@""];
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
     ConnectivityAnalyzer *connection = [ConnectivityAnalyzer instance];
@@ -118,7 +118,7 @@
 }
 
 -(void)deletePermanently:(NSString *)queryString{
-    NSArray *loadedArray=[self loadFromDevice];
+    NSArray *loadedArray=[self loadFromDevice:@""];
     NSManagedObjectContext *context = [self managedObjectContext];
     for(NSManagedObject *entity in loadedArray)
     {
@@ -129,15 +129,18 @@
 }
 
 
--(NSArray *) loadFromDevice{
+-(NSArray *) loadFromDevice:(NSString *) queryString{
     NSManagedObjectContext *moc = [self managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription
                                               entityForName:@"Entity" inManagedObjectContext:moc];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
+    if(queryString && queryString.length > 0){
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"item contains[cd] %@",queryString];
+        [request setPredicate:predicate];
+    }
     NSError *error;
     return [moc executeFetchRequest:request error:&error];
-
 }
 
 

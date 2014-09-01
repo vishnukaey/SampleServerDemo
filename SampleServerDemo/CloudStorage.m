@@ -46,6 +46,10 @@
 #pragma mark - Helping Methods
 -(void) sendGetRequest:(NSString*)queryString ofType:(NSString*)methodType{
     requestMethodType = methodType;
+    NSMutableString *query = [[NSMutableString alloc] initWithString:@"http://10.3.0.145:9000/Sample3/DBConnector"];
+    [query appendString:[NSString stringWithFormat:
+                               @"?Item=%@&Code=%@&Colour=%@",queryString,queryString, queryString]];
+    
     responseData = [[NSMutableData alloc] init];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:
                                     [NSURL URLWithString:queryString]];
