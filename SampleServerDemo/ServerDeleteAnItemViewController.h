@@ -10,6 +10,6 @@
 #import <ReactiveCocoa.h>
     
 @interface ServerDeleteAnItemViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *code;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+    @property (weak, nonatomic) IBOutlet UITextField *code;
+    @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @end

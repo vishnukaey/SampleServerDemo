@@ -10,9 +10,8 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface ServerPutToAnItemViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField  *item;
-@property (weak, nonatomic) IBOutlet UITextField *code;
-@property (weak, nonatomic) IBOutlet UITextField *colour;
-@property (weak, nonatomic) IBOutlet UIButton *submit;
-
+    @property (weak, nonatomic) IBOutlet UITextField  *item;
+    @property (weak, nonatomic) IBOutlet UITextField *code;
+    @property (weak, nonatomic) IBOutlet UITextField *colour;
+    @property (weak, nonatomic) IBOutlet UIButton *submit;
 @end

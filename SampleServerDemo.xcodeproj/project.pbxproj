@@ -32,7 +32,6 @@
 		22B8DDD61979066500AAD046 /* invalid.png in Resources */ = {isa = PBXBuildFile; fileRef = 22B8DDD41979066500AAD046 /* invalid.png */; };
 		22B8DDD71979066500AAD046 /* valid.png in Resources */ = {isa = PBXBuildFile; fileRef = 22B8DDD51979066500AAD046 /* valid.png */; };
 		22B8DDDA1979385E00AAD046 /* ListedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B8DDD91979385E00AAD046 /* ListedViewController.m */; };
-		22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DC5A05197657A100444D37 /* GetNewViewController.m */; };
 		22EE298119A60E0E00890B63 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE298019A60E0E00890B63 /* SettingsManager.m */; };
 		22EE298519A60E2F00890B63 /* StoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE298419A60E2F00890B63 /* StoreManager.m */; };
 		22EE298819A60E5D00890B63 /* ConnectivityAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EE298719A60E5D00890B63 /* ConnectivityAnalyzer.m */; };
@@ -98,8 +97,6 @@
 		22B8DDD51979066500AAD046 /* valid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = valid.png; sourceTree = "<group>"; };
 		22B8DDD81979385E00AAD046 /* ListedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListedViewController.h; path = SampleServerDemo/ListedViewController.h; sourceTree = "<group>"; };
 		22B8DDD91979385E00AAD046 /* ListedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListedViewController.m; path = SampleServerDemo/ListedViewController.m; sourceTree = "<group>"; };
-		22DC5A04197657A100444D37 /* GetNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetNewViewController.h; sourceTree = "<group>"; };
-		22DC5A05197657A100444D37 /* GetNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetNewViewController.m; sourceTree = "<group>"; };
 		22EE297F19A60E0E00890B63 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
 		22EE298019A60E0E00890B63 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		22EE298319A60E2F00890B63 /* StoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreManager.h; sourceTree = "<group>"; };
@@ -146,8 +143,6 @@
 		2229CB00196D43E10059C735 = {
 			isa = PBXGroup;
 			children = (
-				22DC5A04197657A100444D37 /* GetNewViewController.h */,
-				22DC5A05197657A100444D37 /* GetNewViewController.m */,
 				2229CB12196D43E10059C735 /* SampleServerDemo */,
 				2229CB13196D43E10059C735 /* Supporting Files */,
 				2229CB0B196D43E10059C735 /* Frameworks */,
@@ -203,9 +198,9 @@
 		2229CB13196D43E10059C735 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2229CB34196D43E10059C735 /* SampleServerDemoTests */,
 				22FA70ED1980C9E100E083AB /* CoreData */,
 				4034D0AC389F43DCB3DAD7E5 /* Pods.xcconfig */,
-				2229CB34196D43E10059C735 /* SampleServerDemoTests */,
 				2229CB14196D43E10059C735 /* SampleServerDemo-Info.plist */,
 				2229CB15196D43E10059C735 /* InfoPlist.strings */,
 				2229CB18196D43E10059C735 /* main.m */,
@@ -539,7 +534,6 @@
 				22FA70F01980C9EF00E083AB /* Model.xcdatamodeld in Sources */,
 				22EE298119A60E0E00890B63 /* SettingsManager.m in Sources */,
 				2229CB1D196D43E10059C735 /* ServerAppDelegate.m in Sources */,
-				22DC5A06197657A100444D37 /* GetNewViewController.m in Sources */,
 				22EE299519A6104F00890B63 /* OfflineStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

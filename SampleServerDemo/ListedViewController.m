@@ -81,9 +81,11 @@
     [searchBar resignFirstResponder];
 }
 
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *) searchBar {
     [self.view endEditing:YES];
 }
+
 
 
 #pragma mark - DataHandler delegate

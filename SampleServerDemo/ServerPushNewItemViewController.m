@@ -13,8 +13,9 @@
 @interface ServerPushNewItemViewController (){
     NSArray *loadedArray;
 }
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
+    @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
+
 
 @implementation ServerPushNewItemViewController
 
@@ -52,6 +53,7 @@
 
 
 
+
 -(void) initializeViews{
     self.item.text=@"";
     self.code.text=@"";
@@ -69,6 +71,7 @@
     [Utilities showAlert:@"Added !" withTitle:@"Success"];
     [self resignFirstResponder];
 }
+
 
 
 #pragma mark - Methods to Post
